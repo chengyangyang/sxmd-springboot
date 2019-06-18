@@ -1,11 +1,12 @@
 
 
 
-// 文档整理（书香门第）
+// 文档整理（书香门第）  项目框架：mybatis + spring + springMvc + mysql8
 
 一. 项目架构  文档的整理
 
-1.common 公用模块
+1.common java的公用模块
 2.generator  代码生成模板
+3.mybatis-plug  对mybatis 进行封装  单表的增删查改
 
 

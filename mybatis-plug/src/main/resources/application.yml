@@ -1,0 +1,25 @@
+
+# Tomcat
+server:
+  address: 127.0.0.1
+  port: 8095
+  servlet:
+    context-path: /
+
+# 环境
+spring:
+  # 环境的选择   dev | prod
+  profiles:
+    active: dev
+  security:
+    user:
+      password: sxmd
+
+# mybatis
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.sxmd
+  configuration:
+    map-underscore-to-camel-case: true
+
+
