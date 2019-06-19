@@ -64,6 +64,13 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- java 中代替set  get 方法的注解-->
+        <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <optional>true</optional>
+        </dependency>
+
     </dependencies>
 
 

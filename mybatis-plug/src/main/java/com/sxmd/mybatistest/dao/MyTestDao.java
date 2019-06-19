@@ -1,5 +1,6 @@
 package com.sxmd.mybatistest.dao;
 
+import com.sxmd.mapper.BaseSelectMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Map;
@@ -12,7 +13,7 @@ import java.util.Map;
  * Version 1.0
  */
 @Mapper
-public interface MyTestDao {
+public interface MyTestDao extends BaseSelectMapper<Object> {
 
     public String getName(String id);
 }

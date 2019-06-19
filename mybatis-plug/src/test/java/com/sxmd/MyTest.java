@@ -1,6 +1,7 @@
 package com.sxmd;
 
 import com.sxmd.mybatistest.dao.MyTestDao;
+import com.sxmd.mybatistest.entity.MyTestEntity;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Description:
@@ -26,9 +28,11 @@ public class MyTest {
 
     @Test
     public void mytest(){
-        String name = mytest.getName("1");
-        System.out.println("结果："+name);
-        Assert.assertNotNull(name);
+        MyTestEntity myTest = new MyTestEntity();
+        myTest.setName("cheng");
+        List<MyTestEntity> o = mytest.selectOne(myTest);
+        System.out.println("结果："+o);
+        Assert.assertNotNull(o);
     }
 
 
