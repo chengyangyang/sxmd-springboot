@@ -1,5 +1,6 @@
 package com.sxmd.provider;
 
+import com.sxmd.helper.SqlHelper;
 import org.apache.ibatis.builder.annotation.ProviderContext;
 import org.apache.ibatis.jdbc.SQL;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -26,9 +27,11 @@ public class BaseSelectProvider {
      */
     public String selectOne(Object a,ProviderContext context)  {
         new SQL().INTO_COLUMNS();
-        Parameter parameter = context.getMapperMethod().getParameters()[0];
         StringBuilder sql = new StringBuilder();
-        sql.append("select * from my_test");
+        sql.append("select ");
+        sql.append(SqlHelper.getSqlColumns(a.getClass()));
+        sql.append(" from ");
+        sql.append(SqlHelper.getSqlTableName(a.getClass()));
         return sql.toString();
     }
 

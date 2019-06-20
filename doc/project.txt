@@ -7,6 +7,6 @@
 
 1.common java的公用模块
 2.generator  代码生成模板
-3.mybatis-plug  对mybatis 进行封装  单表的增删查改
+3.mybatis-plug  对mybatis 进行封装  单表的增删查改  和spring进行了整合
 
 

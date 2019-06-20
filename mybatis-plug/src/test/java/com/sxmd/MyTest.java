@@ -1,5 +1,6 @@
 package com.sxmd;
 
+import com.sxmd.bean.SpringAnnotationBean;
 import com.sxmd.mybatistest.dao.MyTestDao;
 import com.sxmd.mybatistest.entity.MyTestEntity;
 import org.junit.Assert;
@@ -25,13 +26,16 @@ public class MyTest {
 
     @Resource
     private MyTestDao mytest;
+    @Resource
+    private SpringAnnotationBean springAnnotationBean;
 
     @Test
     public void mytest(){
+        //springAnnotationBean.getTableBean();
         MyTestEntity myTest = new MyTestEntity();
         myTest.setName("cheng");
         List<MyTestEntity> o = mytest.selectOne(myTest);
-        System.out.println("结果："+o);
+        System.out.println("结果：name"+o.get(0).getName() +"age:"+o.get(0).getAge());
         Assert.assertNotNull(o);
     }
 
