@@ -5,6 +5,9 @@
 
 <select id="getName" resultType="String">
     select name from my_test where id = #{id}
+       <if test="id!= null">
+           and id = '1'
+       </if>
 </select>
 
 

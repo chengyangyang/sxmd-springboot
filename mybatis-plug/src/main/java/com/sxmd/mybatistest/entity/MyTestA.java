@@ -2,6 +2,8 @@ package com.sxmd.mybatistest.entity;
 
 import lombok.Data;
 
+import javax.persistence.Id;
+
 /**
  * Description:
  *
@@ -12,5 +14,6 @@ import lombok.Data;
 @Data
 public class MyTestA {
 
-    private String age;
+    @Id
+    private String id;
 }

@@ -41,12 +41,33 @@ public class EntityHelper {
         }
     }
 
-    // 获取实体的列名称
+    /**
+     * Description:   获取主键名称
+     * @author cy
+     * @param entityClass: class
+     * @return com.sxmd.bean.EntityTable
+     * @date  2019/6/19 18:20
+     */
+    public static String getPkIdName(Class<?> entityClass) {
+        EntityTable entityTableName = entityTableMap.get(entityClass);
+        if (entityTableName == null) {
+            throw new SxmdException("无法获取实体类" + entityClass.getCanonicalName() + "对应的主键名称!");
+        } else {
+            return entityTableName.getPkIdName();
+        }
+    }
+
+    /**
+     * Description:   获得实体
+     * @author cy
+     * @param entityClass:
+     * @return com.sxmd.bean.EntityTable
+     * @date  2019/6/21 18:08
+     */
     public static EntityTable getColumnNameList(Class<?> entityClass) {
         EntityTable entityTable = entityTableMap.get(entityClass);
-       // entityTable.getColumnName();
         if (entityTable == null) {
-            throw new SxmdException("无法获取实体类" + entityClass.getCanonicalName() + "对应的表名!");
+            throw new SxmdException("无法获取实体类" + entityClass.getCanonicalName() + "对应的数据库类型!");
         } else {
             return entityTable;
         }
@@ -78,7 +99,7 @@ public class EntityHelper {
 
 
     /**
-     * Description:   获得 sql主键名称
+     * Description:   设置 sql主键名称
      * @author cy
      * @param aClass:
      * @return java.lang.String
@@ -96,7 +117,7 @@ public class EntityHelper {
     }
 
     /**
-     * Description:  获得除主键之外的sql 字段名称
+     * Description:  设置除主键之外的sql 字段名称
      * @author cy
      * @param aClass:
      * @return java.util.LinkedHashSet<java.lang.String>
@@ -114,6 +135,13 @@ public class EntityHelper {
         return columnsNameSet;
     }
 
+    /**
+     * Description:   设置表名称
+     * @author cy
+     * @param aClass:
+     * @return java.lang.String
+     * @date  2019/6/21 9:57
+     */
     public static String setTableName(Class<?> aClass){
         String tableName = aClass.getAnnotation(Table.class).name();
         if(StringUtils.isEmpty(tableName)){
@@ -122,6 +150,13 @@ public class EntityHelper {
         return tableName;
     }
 
+    /**
+     * Description:   获得类中所有属性
+     * @author cy
+     * @param cls:
+     * @return java.util.List<java.lang.reflect.Field>
+     * @date  2019/6/21 9:58
+     */
     public static List<Field> getAllFieldsList(final Class<?> cls) {
         final List<Field> allFields = new ArrayList<Field>();
         Class<?> currentClass = cls;
@@ -134,6 +169,26 @@ public class EntityHelper {
         }
         return allFields;
     }
+
+    /**
+     * Description:   查询对象中有值的字段集合
+     * @author cy
+     * @param obj:
+     * @return java.util.List<java.lang.reflect.Field>
+     * @date  2019/6/21 10:42
+     */
+    public static List<Field> getHasValueFieldsList(Object obj)  {
+        return getAllFieldsList(obj.getClass()).stream().filter(x -> {
+            x.setAccessible(true);
+            try {
+                return !Objects.isNull(x.get(obj));
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }).collect(Collectors.toList());
+    }
+
 
 }
 

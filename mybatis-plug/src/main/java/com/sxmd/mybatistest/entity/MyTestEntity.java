@@ -16,9 +16,10 @@ import javax.persistence.Table;
 @Table(name = "my_test")
 public class MyTestEntity extends MyTestA {
 
-    @Id
-    private String id;
+
     private String name;
+    private String comInfo;
+    private String age;
 
 
 }
