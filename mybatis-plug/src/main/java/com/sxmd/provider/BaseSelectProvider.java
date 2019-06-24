@@ -1,22 +1,11 @@
 package com.sxmd.provider;
 
-import com.sxmd.exception.SxmdException;
+import com.sxmd.base.Example;
 import com.sxmd.helper.ProviderHelper;
 import com.sxmd.helper.SqlHelper;
-import com.sxmd.mapper.BaseSelectMapper;
 import org.apache.ibatis.builder.annotation.ProviderContext;
-import org.apache.ibatis.jdbc.SQL;
-import org.apache.ibatis.mapping.MappedStatement;
-import org.springframework.jdbc.core.SqlProvider;
-import org.springframework.util.StringUtils;
 
-import java.lang.reflect.Parameter;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Stream;
+import java.util.Map;
 
 
 /**
@@ -27,6 +16,52 @@ import java.util.stream.Stream;
  * Version 1.0
  */
 public class BaseSelectProvider {
+
+
+    /**
+     * Description:   条件拼接
+     * @author cy
+     * @param example:  传的对象
+     * @return java.lang.String
+     * @date  2019/6/21 11:35
+     */
+    public String exampleSelectOne(Example example, ProviderContext context)  {
+        // 校验
+        Class<?> aclass = ProviderHelper.getBaseSelectMapperParameterizedType(context);
+        ProviderHelper.isNullThrowException(aclass);
+        ProviderHelper.isNullThrowException(aclass);
+        StringBuilder sql = new StringBuilder();
+        sql.append("select ");
+        sql.append(SqlHelper.getSqlColumns(aclass));
+        sql.append(" from ");
+        sql.append(SqlHelper.getSqlTableName(aclass));
+        sql.append(" where 1=1");
+        sql.append(example.getSql());
+        return sql.toString();
+    }
+
+    /**
+     * Description:   条件拼接
+     * @author cy
+     * @param example:  传的对象
+     * @return java.lang.String
+     * @date  2019/6/21 11:35
+     */
+    public String exampleSelectList(Example example, ProviderContext context)  {
+        // 校验
+        Class<?> aclass = ProviderHelper.getBaseSelectMapperParameterizedType(context);
+        ProviderHelper.isNullThrowException(aclass);
+        ProviderHelper.isNullThrowException(aclass);
+        StringBuilder sql = new StringBuilder();
+        sql.append("select ");
+        sql.append(SqlHelper.getSqlColumns(aclass));
+        sql.append(" from ");
+        sql.append(SqlHelper.getSqlTableName(aclass));
+        sql.append(" where 1=1");
+        sql.append(example.getSql());
+        return sql.toString();
+    }
+
 
     /**
      * Description:   单条sql 查询为单个

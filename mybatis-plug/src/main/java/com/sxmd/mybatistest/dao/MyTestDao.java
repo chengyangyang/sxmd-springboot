@@ -14,7 +14,7 @@ import java.util.Map;
  * Version 1.0
  */
 @Mapper
-public interface MyTestDao extends BaseSelectMapper<MyTestEntity>, BaseInsertMapper<MyTestEntity>, BaseUpdateMapper<MyTestEntity> , BaseDeleteMapper<MyTestEntity> , BaseExampleMapper {
+public interface MyTestDao extends BaseSelectMapper<MyTestEntity>, BaseInsertMapper<MyTestEntity>, BaseUpdateMapper<MyTestEntity> , BaseDeleteMapper<MyTestEntity> , BaseExampleMapper<MyTestEntity> {
 
     public String getName(String id);
 }

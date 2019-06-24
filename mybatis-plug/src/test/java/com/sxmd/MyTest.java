@@ -1,6 +1,6 @@
 package com.sxmd;
 
-import com.sxmd.bean.SpringAnnotationBean;
+import com.sxmd.base.Example;
 import com.sxmd.mybatistest.dao.MyTestDao;
 import com.sxmd.mybatistest.entity.MyTestEntity;
 import com.sxmd.mybatistest.service.MyTestService;
@@ -138,6 +138,20 @@ public class MyTest {
         myTest.setAge("112");
         int insert = myTestDao.deleteByPrimaryKeys(Arrays.asList("1","12"));
         Assert.assertNotNull(insert);
+    }
+
+    @Test
+    public void exampleSelectOne(){
+        Example exampleMapper = new Example().andEqualTo("name","1");
+           Object o = myTestDao.exampleSelectOne(exampleMapper);
+        Assert.assertNotNull(o);
+    }
+
+    @Test
+    public void exampleSelectList(){
+        Example exampleMapper = new Example().andEqualTo("name","1");
+        Object o = myTestDao.exampleSelectList(exampleMapper);
+        Assert.assertNotNull(o);
     }
 
 }
