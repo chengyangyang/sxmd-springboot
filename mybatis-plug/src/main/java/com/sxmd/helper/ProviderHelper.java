@@ -1,6 +1,7 @@
 package com.sxmd.helper;
 
 import com.sxmd.exception.SxmdException;
+import com.sxmd.mapper.BaseDeleteMapper;
 import com.sxmd.mapper.BaseSelectMapper;
 import org.apache.ibatis.builder.annotation.ProviderContext;
 
@@ -58,6 +59,23 @@ public class ProviderHelper {
                 .findFirst().map(x -> x.getActualTypeArguments()[0])
                 .filter(Class.class::isInstance).map(Class.class::cast)
                 .orElseThrow(()->new SxmdException("未找到BaseSelectMapper的泛型"));
+    }
+
+    /**
+     * Description:   获得BaseDeleteMapper 泛型的类型
+     * @author cy
+     * @param context:
+     * @return java.lang.Class<?>
+     * @date  2019/6/21 17:25
+     */
+    public static Class<?> getBaseDeleteMapperParameterizedType(ProviderContext context) {
+        return Arrays.stream(context.getMapperType().getGenericInterfaces())
+                .filter(x -> x instanceof ParameterizedType)
+                .map(ParameterizedType.class::cast)
+                .filter(x -> x.getRawType() == BaseDeleteMapper.class)
+                .findFirst().map(x -> x.getActualTypeArguments()[0])
+                .filter(Class.class::isInstance).map(Class.class::cast)
+                .orElseThrow(()->new SxmdException("未找到BaseDeleteMapper的泛型"));
     }
 
 

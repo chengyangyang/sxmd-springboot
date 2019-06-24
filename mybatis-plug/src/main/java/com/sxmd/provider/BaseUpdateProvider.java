@@ -1,0 +1,48 @@
+package com.sxmd.provider;
+
+import com.sxmd.helper.ProviderHelper;
+import com.sxmd.helper.SqlHelper;
+import com.sxmd.helper.StringHelper;
+import org.apache.ibatis.annotations.UpdateProvider;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Description:  更新sql的组装
+ *
+ *
+ * @author cy
+ * @date 2019年06月24日 13:36
+ * Version 1.0
+ */
+public class BaseUpdateProvider {
+
+    /**
+     * Description:   单个更新
+     * @author cy
+     * @param obj:
+     * @return java.lang.String
+     * @date  2019/6/24 13:39
+     */
+    public String updateByPrimaryKey(Object obj)  {
+        ProviderHelper.isNullThrowException(obj.getClass());
+        // 查询主键字段
+        String pkIdName = SqlHelper.getSqlPkIdName(obj.getClass());
+        ProviderHelper.isNullPkIdNameThrowException(pkIdName);
+        // 校验
+        ProviderHelper.isNullThrowException(obj);
+        StringBuilder sql = new StringBuilder();
+        sql.append("update ");
+        sql.append(SqlHelper.getSqlTableName(obj.getClass()));
+        sql.append(" set ");
+        sql.append(SqlHelper.getSqlUpdateColumns(obj.getClass()));
+        sql.append(" where ");
+        sql.append(pkIdName);
+        sql.append(" = #{");
+        sql.append(StringHelper.camelCaseName(pkIdName));
+        sql.append("}");
+        return sql.toString();
+    }
+
+}

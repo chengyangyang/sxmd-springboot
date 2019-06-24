@@ -59,7 +59,7 @@ public interface BaseSelectMapper<T> {
     /**
      * Description:   条件查询是否存在
      * @author cy
-     * @param id: 主键
+     * @param obj: 条件查询
      * @return T
      * @date  2019/6/21 17:40
      */
@@ -68,6 +68,19 @@ public interface BaseSelectMapper<T> {
             method = "exists"
     )
     boolean exists(Object obj);
+
+    /**
+     * Description:   是否存在该主键
+     * @author cy
+     * @param id: 主键值
+     * @return boolean
+     * @date  2019/6/24 8:55
+     */
+    @SelectProvider(
+            type = BaseSelectProvider.class,
+            method = "existsWithPrimaryKey"
+    )
+    boolean existsWithPrimaryKey(@Param("id") Object id);
 
 
     /**

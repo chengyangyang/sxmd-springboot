@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.lang.reflect.Field;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -24,11 +25,11 @@ import java.util.stream.IntStream;
 public class MyTest1 {
 
     public static void main(String[] args) {
-
-            IntStream.of(new int[] {1, 2, 3}).forEach(System.out::println);
-            IntStream.range(1, 3).forEach(System.out::println);
-            IntStream.rangeClosed(1, 3).forEach(System.out::println);
-
+        //(#{list[{0}].name},#{list[{0}].comInfo},#{list[{0}].age},#{list[{0}].id}),
+        String pattern1 = " (#'{'list[{0}].name'}',#'{'list[{0}].comInfo'}',#'{'list[{0}].age'}',#'{'list[{0}].id'}')";
+        //使用默认的本地化对象格式化字符串
+        String format = MessageFormat.format(pattern1, 1);
+        System.out.println(format);
 
     }
 

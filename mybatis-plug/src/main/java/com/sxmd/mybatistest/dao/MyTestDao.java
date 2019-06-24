@@ -1,6 +1,6 @@
 package com.sxmd.mybatistest.dao;
 
-import com.sxmd.mapper.BaseSelectMapper;
+import com.sxmd.mapper.*;
 import com.sxmd.mybatistest.entity.MyTestEntity;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -14,7 +14,7 @@ import java.util.Map;
  * Version 1.0
  */
 @Mapper
-public interface MyTestDao extends BaseSelectMapper<MyTestEntity> {
+public interface MyTestDao extends BaseSelectMapper<MyTestEntity>, BaseInsertMapper<MyTestEntity>, BaseUpdateMapper<MyTestEntity> , BaseDeleteMapper<MyTestEntity> , BaseExampleMapper {
 
     public String getName(String id);
 }

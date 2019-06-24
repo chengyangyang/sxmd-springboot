@@ -108,6 +108,36 @@ public class BaseSelectProvider {
         return sql.toString();
     }
 
+
+    /**
+     * Description:   是否存在该主键
+     * @author cy
+     * @param context:
+     * @return java.lang.String
+     * @date  2019/6/24 8:57
+     */
+    public String existsWithPrimaryKey(ProviderContext context)  {
+        Class<?> aclass = ProviderHelper.getBaseSelectMapperParameterizedType(context);
+        ProviderHelper.isNullThrowException(aclass);
+        // 查询主键字段
+        String pkIdName = SqlHelper.getSqlPkIdName(aclass);
+        ProviderHelper.isNullPkIdNameThrowException(pkIdName);
+
+        StringBuilder sql = new StringBuilder();
+        sql.append("select IFNULL((");
+        sql.append("select ");
+        sql.append(" 1 ");
+        sql.append(" from ");
+        sql.append(SqlHelper.getSqlTableName(aclass));
+        sql.append(" where ");
+        sql.append(pkIdName);
+        sql.append(" = #{id}");
+        sql.append(" limit 1");
+        sql.append("),0)");
+        return sql.toString();
+    }
+
+
     /**
      * Description:   根据主键进行查询
      * @author cy

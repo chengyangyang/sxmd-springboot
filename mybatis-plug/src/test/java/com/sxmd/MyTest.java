@@ -11,8 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Description:
@@ -70,6 +69,75 @@ public class MyTest {
         Assert.assertNotNull(exists);
     }
 
+    @Test
+    public void existsById(){
 
+        boolean exists = myTestDao.existsWithPrimaryKey("11111");
+        Assert.assertNotNull(exists);
+    }
+
+    @Test
+    public void insert(){
+        MyTestEntity myTest = new MyTestEntity();
+        myTest.setId("11");
+        myTest.setComInfo("ee");
+        myTest.setName("新增测试");
+        myTest.setAge("123");
+        int insert = myTestDao.insert(myTest);
+        Assert.assertNotNull(insert);
+    }
+
+    @Test
+    public void insertAll(){
+        ArrayList<MyTestEntity> myTestEntities = new ArrayList<>();
+        MyTestEntity myTest = new MyTestEntity();
+        myTest.setId("12");
+        myTest.setComInfo("ee1");
+        myTest.setName("新增测试1");
+        myTest.setAge("1");
+        myTestEntities.add(myTest);
+
+        MyTestEntity myTest1 = new MyTestEntity();
+        myTest1.setId("13");
+        myTest1.setComInfo("ee2");
+        myTest1.setName("新增测试2");
+        myTest1.setAge("2");
+        myTestEntities.add(myTest1);
+        int insert = myTestDao.insertAll(myTestEntities);
+        Assert.assertNotNull(insert);
+    }
+
+    @Test
+    public void updateById(){
+        MyTestEntity myTest = new MyTestEntity();
+        myTest.setId("11");
+        myTest.setComInfo("ee12");
+        myTest.setName("新增测试12");
+        myTest.setAge("112");
+        int insert = myTestDao.updateByPrimaryKey(myTest);
+        Assert.assertNotNull(insert);
+    }
+
+    @Test
+    public void deleteByPrimaryKey(){
+        MyTestEntity myTest = new MyTestEntity();
+        myTest.setId("11");
+        myTest.setComInfo("ee12");
+        myTest.setName("新增测试12");
+        myTest.setAge("112");
+        int insert = myTestDao.deleteByPrimaryKey("11");
+        Assert.assertNotNull(insert);
+    }
+
+    @Test
+    public void deleteByPrimaryKeys(){
+        MyTestEntity myTest = new MyTestEntity();
+        myTest.setId("11");
+        myTest.setComInfo("ee12");
+        myTest.setName("新增测试12");
+        myTest.setAge("112");
+        int insert = myTestDao.deleteByPrimaryKeys(Arrays.asList("1","12"));
+        Assert.assertNotNull(insert);
+    }
 
 }
