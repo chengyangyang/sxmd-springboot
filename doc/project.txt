@@ -1,7 +1,7 @@
 
 
 
-// 文档整理（书香门第）  项目框架：mybatis3.5 + spring + springMvc + mysql8
+// 文档整理（书香门第）  项目框架：mybatis3.5 + spring5.1.7 + springMvc + mysql8
 
 一. 项目架构  文档的整理
 

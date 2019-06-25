@@ -3,6 +3,7 @@ package com.sxmd.bean;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -18,10 +19,12 @@ import java.util.Set;
 public class EntityTable {
 
     // 表名称
-    private String tableName;
+    private String tableSqlName;
     // 主键名称
     private String pkIdName;
-    // 列名称集合（驼峰式转化成了下划线_式）
-    private LinkedHashSet<String> columnNamesExcludePkIdName;
+    // 主键名称
+    private String pkIdSqlName;
+    // 列名称集合（key 是字段名称   value 是数据库字段数据）
+    private LinkedHashMap<String,String> columnExcludePkId;
 
 }

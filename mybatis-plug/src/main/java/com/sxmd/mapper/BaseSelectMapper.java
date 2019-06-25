@@ -31,7 +31,7 @@ public interface BaseSelectMapper<T> {
 
 
     /**
-     * Description:   条件查询列表
+     * Description:   条件查询列表 对主键进行了过滤
      * @author cy
      * @param var1:
      * @return java.util.List<T>

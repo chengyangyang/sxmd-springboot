@@ -27,9 +27,6 @@ public class BaseUpdateProvider {
      */
     public String updateByPrimaryKey(Object obj)  {
         ProviderHelper.isNullThrowException(obj.getClass());
-        // 查询主键字段
-        String pkIdName = SqlHelper.getSqlPkIdName(obj.getClass());
-        ProviderHelper.isNullPkIdNameThrowException(pkIdName);
         // 校验
         ProviderHelper.isNullThrowException(obj);
         StringBuilder sql = new StringBuilder();
@@ -38,9 +35,9 @@ public class BaseUpdateProvider {
         sql.append(" set ");
         sql.append(SqlHelper.getSqlUpdateColumns(obj.getClass()));
         sql.append(" where ");
-        sql.append(pkIdName);
+        sql.append(SqlHelper.getPkIdSqlName(obj.getClass()));
         sql.append(" = #{");
-        sql.append(StringHelper.camelCaseName(pkIdName));
+        sql.append(SqlHelper.getPkIdName(obj.getClass()));
         sql.append("}");
         return sql.toString();
     }

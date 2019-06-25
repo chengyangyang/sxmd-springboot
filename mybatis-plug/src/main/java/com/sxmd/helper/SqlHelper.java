@@ -1,13 +1,12 @@
 package com.sxmd.helper;
 
+import com.sxmd.bean.EntityTable;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Description:  拼接sql
@@ -18,29 +17,43 @@ import java.util.Set;
  */
 public class SqlHelper {
 
+    // 存储getSqlColumns 的信息（通用）
+    private static final Map<Class<?>, String> sqlColumnsMap = new ConcurrentHashMap();
+
+    // 存储 getSqlInsertColumns 的信息（通用 带主键）
+    private static final Map<Class<?>, String> sqlInsertColumnsMap = new ConcurrentHashMap();
+
+    // 存储 getSqlInsertColumns 的信息（通用 不带主键）
+    private static final Map<Class<?>, String> sqlInsertColumnsNotIdMap = new ConcurrentHashMap();
 
     /**
-     * Description:   获取所有的列
+     * Description:   获取所有的列(用逗号隔开 含有主键)
      * @author cy
      * @param aClass:
      * @return java.lang.String
      * @date  2019/6/20 18:21
      */
     public static String getSqlColumns(final Class<?> aClass){
-        StringBuilder sqlColums = new StringBuilder();
-        Set<String> columns = EntityHelper.getColumnNameList(aClass).getColumnNamesExcludePkIdName();
-        Iterator<String> iterator = columns.iterator();
-        while (iterator.hasNext()){
-            sqlColums.append(iterator.next() + ",");
-        }
-        String sql = sqlColums.toString();
-        if(StringUtils.isEmpty(getSqlPkIdName(aClass))){
-            sql = sqlColums.substring(0,sql.length() - 1);
-        }else {
-            sql += getSqlPkIdName(aClass);
-        }
-        return sql;
+        return sqlColumnsMap.get(aClass);
     }
+
+    /**
+     * Description:   设置查询字段拼接(用逗号隔开 含有主键)
+     * @author cy
+     * @param aClass:
+     * @return java.lang.String
+     * @date  2019/6/20 18:21
+     */
+    public static void setSqlColumns(final Class<?> aClass){
+        StringBuilder sqlColums = new StringBuilder();
+        LinkedHashMap<String, String> column = EntityHelper.getColumnExcludePkIdList(aClass);
+        for (Map.Entry<String, String> co: column.entrySet()) {
+            sqlColums.append(co.getValue() + ",");
+        }
+        sqlColums.append(getPkIdSqlName(aClass));
+        sqlColumnsMap.put(aClass,sqlColums.toString());
+    }
+
 
     /**
      * Description:   获取表名称
@@ -54,13 +67,24 @@ public class SqlHelper {
     }
 
     /**
-     * Description:   获取主键名称
+     * Description:   获取主键sql名称
      * @author cy
      * @param aClass:
      * @return java.lang.String
      * @date  2019/6/20 18:21
      */
-    public static String getSqlPkIdName(Class<?> aClass){
+    public static String getPkIdSqlName(Class<?> aClass){
+        return EntityHelper.getPkIdSqlName(aClass);
+    }
+
+    /**
+     * Description:   获取主键字段名称
+     * @author cy
+     * @param aClass:
+     * @return java.lang.String
+     * @date  2019/6/20 18:21
+     */
+    public static String getPkIdName(Class<?> aClass){
         return EntityHelper.getPkIdName(aClass);
     }
 
@@ -79,10 +103,13 @@ public class SqlHelper {
         if(Objects.isNull(fields) || fields.size() <= 0){
             return "";
         }
+        // 得到对应的列
+        LinkedHashMap<String, String> columnExcludePkId = EntityHelper.getColumnExcludePkIdList(obj.getClass());
+
         StringBuilder sql = new StringBuilder();
         sql.append(" where ");
         // 添加第一个条件
-        sql.append(StringHelper.underscoreName(fields.get(0).getName()));
+        sql.append(columnExcludePkId.get(fields.get(0).getName()));
         sql.append(" = #{");
         sql.append(fields.get(0).getName());
         sql.append("}");
@@ -91,7 +118,7 @@ public class SqlHelper {
             fields.remove(0);
             fields.forEach(x->{
                 sql.append(" and ");
-                sql.append(StringHelper.underscoreName(x.getName()));
+                sql.append(columnExcludePkId.get(x.getName()));
                 sql.append(" = #{");
                 sql.append(x.getName());
                 sql.append("}");
@@ -101,7 +128,7 @@ public class SqlHelper {
     }
 
     /**
-     * Description:   插入语句的拼接（同时拼接字段，和值）
+     * Description:   单条插入语句的拼接（同时拼接字段，和值）
      * @author cy
      * @param aClass:
      * @param isHasId: 是否包含主键
@@ -109,30 +136,57 @@ public class SqlHelper {
      * @date  2019/6/24 9:38
      */
     public static String getSqlInsertColumns(Class<?> aClass,boolean isHasId) {
+        if(isHasId){
+            return sqlInsertColumnsMap.get(aClass);
+        }else {
+            return sqlInsertColumnsNotIdMap.get(aClass);
+        }
+    }
+
+    /**
+     * Description:   设置单条插入语句的拼接（同时拼接字段，和值）
+     * @author cy
+     * @param aClass:
+     * @return java.lang.String
+     * @date  2019/6/24 9:38
+     */
+    public static void setSqlInsertColumns(Class<?> aClass) {
         StringBuilder sqlColums = new StringBuilder();
         StringBuilder valueColums = new StringBuilder();
-        Set<String> columns = EntityHelper.getColumnNameList(aClass).getColumnNamesExcludePkIdName();
-        Iterator<String> iterator = columns.iterator();
-        while (iterator.hasNext()){
-            final String next = iterator.next();
+        LinkedHashMap<String, String> column = EntityHelper.getColumnExcludePkIdList(aClass);
+        for (Map.Entry<String, String> co: column.entrySet()) {
             valueColums.append("#{");
-            valueColums.append(StringHelper.camelCaseName(next));
+            valueColums.append(co.getKey());
             valueColums.append("},");
-            sqlColums.append(next + ",");
+            sqlColums.append(co.getValue() + ",");
         }
-        String sql = sqlColums.toString();
-        String valueSql = valueColums.toString();
-        if(StringUtils.isEmpty(getSqlPkIdName(aClass)) || !isHasId){
-            sql = sql.substring(0,sql.length() - 1);
-            valueSql = valueSql.substring(0,sql.length() - 1);
-        }else {
-            sql += getSqlPkIdName(aClass);
-            valueSql += "#{"+StringHelper.camelCaseName(getSqlPkIdName(aClass))+"}";
-        }
-
+        sqlColums.append(EntityHelper.getPkIdSqlName(aClass));
+        valueColums.append("#{"+EntityHelper.getPkIdName(aClass)+"}");
         // 拼接生成新的语句
-        sql = "(" + sql + ") " + "values" + " (" + valueSql + ")";
-        return sql;
+        String sql = "(" + sqlColums.toString() + ") " + "values" + " (" + valueColums.toString() + ")";
+        sqlInsertColumnsMap.put(aClass,sql);
+    }
+
+    /**
+     * Description:   设置单条插入语句的拼接（同时拼接字段，和值）
+     * @author cy
+     * @param aClass:
+     * @return java.lang.String
+     * @date  2019/6/24 9:38
+     */
+    public static void setSqlInsertNotIdColumns(Class<?> aClass) {
+        StringBuilder sqlColums = new StringBuilder();
+        StringBuilder valueColums = new StringBuilder();
+        LinkedHashMap<String, String> column = EntityHelper.getColumnExcludePkIdList(aClass);
+        for (Map.Entry<String, String> co: column.entrySet()) {
+            valueColums.append("#{");
+            valueColums.append(co.getKey());
+            valueColums.append("},");
+            sqlColums.append(co.getValue() + ",");
+        }
+        // 拼接生成新的语句
+        String sql = "(" + sqlColums.toString().substring(0,sqlColums.length() - 1) + ") " + "values" + " (" + valueColums.toString().substring(0,valueColums.length() - 1) + ")";
+        sqlInsertColumnsNotIdMap.put(aClass,sql);
     }
 
     /**
@@ -147,27 +201,25 @@ public class SqlHelper {
     public static String getSqlInsertAllColumns(List<Object> list,Class<?> aClass, boolean isHasId) {
         StringBuilder sqlColums = new StringBuilder();
         StringBuilder valueColums = new StringBuilder();
-        Set<String> columns = EntityHelper.getColumnNameList(aClass).getColumnNamesExcludePkIdName();
-        Iterator<String> iterator = columns.iterator();
-        while (iterator.hasNext()){
-            // 拼接值
-            final String next = iterator.next();
+        LinkedHashMap<String, String> column = EntityHelper.getColumnExcludePkIdList(aClass);
+        for (Map.Entry<String, String> co: column.entrySet()) {
             valueColums.append("#'{'list[{0}].");
-            valueColums.append(StringHelper.camelCaseName(next));
+            valueColums.append(co.getKey());
             valueColums.append("'}',");
             // 拼接字段
-            sqlColums.append(next + ",");
+            sqlColums.append(co.getValue() + ",");
         }
+
         String sql = sqlColums.toString();
         String valueSql = valueColums.toString();
-        if(StringUtils.isEmpty(getSqlPkIdName(aClass)) || !isHasId){
+        if(!isHasId){
             sql = sql.substring(0,sql.length() - 1);
             // 对list 的value进行拼接
             valueSql = valueSql.substring(0,sql.length() - 1);
         }else {
-            sql += getSqlPkIdName(aClass);
+            sql += EntityHelper.getPkIdSqlName(aClass);
             // 在字符串替换中，要使用单引号‘{’ 处理符号
-            valueSql += "#'{'list[{0}]."+StringHelper.camelCaseName(getSqlPkIdName(aClass))+"'}'";
+            valueSql += "#'{'list[{0}]."+EntityHelper.getPkIdName(aClass)+"'}'";
         }
         // 对新的value 进行拼接
         valueSql =" (" + valueSql + "),";
@@ -190,36 +242,13 @@ public class SqlHelper {
      */
     public static String getSqlUpdateColumns(Class<?> aClass) {
         StringBuilder sqlColums = new StringBuilder();
-        Set<String> columns = EntityHelper.getColumnNameList(aClass).getColumnNamesExcludePkIdName();
-        Iterator<String> iterator = columns.iterator();
-        while (iterator.hasNext()){
-            String next = iterator.next();
-            sqlColums.append(next + " = #{");
-            sqlColums.append(StringHelper.camelCaseName(next));
+        LinkedHashMap<String, String> column = EntityHelper.getColumnExcludePkIdList(aClass);
+        for (Map.Entry<String, String> co: column.entrySet()) {
+            sqlColums.append(co.getKey() + " = #{");
+            sqlColums.append(co.getValue());
             sqlColums.append("},");
         }
         return sqlColums.substring(0,sqlColums.length() - 1);
-
-    }
-
-    /**
-     * Description:   删除语句的拼接
-     * @author cy
-     * @param aClass:
-     * @return java.lang.String
-     * @date  2019/6/24 14:27
-     */
-    public static String getSqlWhereDeleteColumns(Class<?> aClass) {
-        StringBuilder sqlColums = new StringBuilder();
-        Set<String> columns = EntityHelper.getColumnNameList(aClass).getColumnNamesExcludePkIdName();
-        Iterator<String> iterator = columns.iterator();
-        while (iterator.hasNext()){
-            String next = iterator.next();
-            sqlColums.append(next + " = #{");
-            sqlColums.append(StringHelper.camelCaseName(next));
-            sqlColums.append("} and ");
-        }
-        return sqlColums.substring(0,sqlColums.length() - 4);
     }
 
     /**

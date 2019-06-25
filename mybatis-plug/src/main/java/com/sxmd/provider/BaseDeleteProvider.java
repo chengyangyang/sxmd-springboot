@@ -26,16 +26,12 @@ public class BaseDeleteProvider {
     public String deleteByPrimaryKey(ProviderContext context)  {
         Class<?> aclass = ProviderHelper.getBaseDeleteMapperParameterizedType(context);
         ProviderHelper.isNullThrowException(aclass);
-        // 查询主键字段
-        String pkIdName = SqlHelper.getSqlPkIdName(aclass);
-        ProviderHelper.isNullPkIdNameThrowException(pkIdName);
-
         StringBuilder sql = new StringBuilder();
         sql.append("delete ");
         sql.append(" from ");
         sql.append(SqlHelper.getSqlTableName(aclass));
         sql.append(" where ");
-        sql.append(pkIdName);
+        sql.append(SqlHelper.getPkIdSqlName(aclass));
         sql.append(" = #{id}");
         sql.append(" limit 1");
         return sql.toString();
@@ -53,16 +49,12 @@ public class BaseDeleteProvider {
         List list = (List)map.get("ids");
         Class<?> aclass = ProviderHelper.getBaseDeleteMapperParameterizedType(context);
         ProviderHelper.isNullThrowException(aclass);
-        // 查询主键字段
-        String pkIdName = SqlHelper.getSqlPkIdName(aclass);
-        ProviderHelper.isNullPkIdNameThrowException(pkIdName);
-
         StringBuilder sql = new StringBuilder();
         sql.append("delete ");
         sql.append(" from ");
         sql.append(SqlHelper.getSqlTableName(aclass));
         sql.append(" where ");
-        sql.append(pkIdName);
+        sql.append(SqlHelper.getPkIdSqlName(aclass));
         sql.append(" in (");
         sql.append(SqlHelper.getSqlDeleteIds(list));
         sql.append(")");

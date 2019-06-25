@@ -62,4 +62,27 @@ public class StringHelper {
         return result.toString();
     }
 
+
+    /**
+     * Description:   字符串空判断
+     * @author cy
+     * @param str:
+     * @return boolean
+     * @date  2019/6/25 11:03
+     */
+    public static boolean isBlank(String str) {
+        int strLen;
+        if (str != null && (strLen = str.length()) != 0) {
+            for(int i = 0; i < strLen; ++i) {
+                if (!Character.isWhitespace(str.charAt(i))) {
+                    return false;
+                }
+            }
+
+            return true;
+        } else {
+            return true;
+        }
+    }
+
 }

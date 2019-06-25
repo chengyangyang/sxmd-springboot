@@ -1,6 +1,7 @@
 package com.sxmd.provider;
 
 import com.sxmd.base.Example;
+import com.sxmd.helper.EntityHelper;
 import com.sxmd.helper.ProviderHelper;
 import com.sxmd.helper.SqlHelper;
 import org.apache.ibatis.builder.annotation.ProviderContext;
@@ -29,7 +30,6 @@ public class BaseSelectProvider {
         // 校验
         Class<?> aclass = ProviderHelper.getBaseSelectMapperParameterizedType(context);
         ProviderHelper.isNullThrowException(aclass);
-        ProviderHelper.isNullThrowException(aclass);
         StringBuilder sql = new StringBuilder();
         sql.append("select ");
         sql.append(SqlHelper.getSqlColumns(aclass));
@@ -50,7 +50,6 @@ public class BaseSelectProvider {
     public String exampleSelectList(Example example, ProviderContext context)  {
         // 校验
         Class<?> aclass = ProviderHelper.getBaseSelectMapperParameterizedType(context);
-        ProviderHelper.isNullThrowException(aclass);
         ProviderHelper.isNullThrowException(aclass);
         StringBuilder sql = new StringBuilder();
         sql.append("select ");
@@ -154,10 +153,6 @@ public class BaseSelectProvider {
     public String existsWithPrimaryKey(ProviderContext context)  {
         Class<?> aclass = ProviderHelper.getBaseSelectMapperParameterizedType(context);
         ProviderHelper.isNullThrowException(aclass);
-        // 查询主键字段
-        String pkIdName = SqlHelper.getSqlPkIdName(aclass);
-        ProviderHelper.isNullPkIdNameThrowException(pkIdName);
-
         StringBuilder sql = new StringBuilder();
         sql.append("select IFNULL((");
         sql.append("select ");
@@ -165,7 +160,7 @@ public class BaseSelectProvider {
         sql.append(" from ");
         sql.append(SqlHelper.getSqlTableName(aclass));
         sql.append(" where ");
-        sql.append(pkIdName);
+        sql.append(SqlHelper.getPkIdSqlName(aclass));
         sql.append(" = #{id}");
         sql.append(" limit 1");
         sql.append("),0)");
@@ -183,17 +178,13 @@ public class BaseSelectProvider {
     public String selectByPrimaryKey(ProviderContext context)  {
         Class<?> aclass = ProviderHelper.getBaseSelectMapperParameterizedType(context);
         ProviderHelper.isNullThrowException(aclass);
-        // 查询主键字段
-        String pkIdName = SqlHelper.getSqlPkIdName(aclass);
-        ProviderHelper.isNullPkIdNameThrowException(pkIdName);
-
         StringBuilder sql = new StringBuilder();
         sql.append("select ");
         sql.append(SqlHelper.getSqlColumns(aclass));
         sql.append(" from ");
         sql.append(SqlHelper.getSqlTableName(aclass));
         sql.append(" where ");
-        sql.append(pkIdName);
+        sql.append(SqlHelper.getPkIdSqlName(aclass));
         sql.append(" = #{id}");
         return sql.toString();
     }

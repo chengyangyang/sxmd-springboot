@@ -79,7 +79,7 @@ public class MyTest {
     @Test
     public void insert(){
         MyTestEntity myTest = new MyTestEntity();
-        myTest.setId("11");
+        myTest.setId("12");
         myTest.setComInfo("ee");
         myTest.setName("新增测试");
         myTest.setAge("123");
