@@ -2,11 +2,6 @@ package com.sxmd.provider;
 
 import com.sxmd.helper.ProviderHelper;
 import com.sxmd.helper.SqlHelper;
-import com.sxmd.helper.StringHelper;
-import org.apache.ibatis.annotations.UpdateProvider;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * Description:  更新sql的组装

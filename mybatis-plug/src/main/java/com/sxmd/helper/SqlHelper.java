@@ -1,7 +1,5 @@
 package com.sxmd.helper;
 
-import com.sxmd.bean.EntityTable;
-import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
 import java.text.MessageFormat;

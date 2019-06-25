@@ -1,7 +1,6 @@
 package com.sxmd.bean;
 
 import com.sxmd.helper.EntityHelper;
-import com.sxmd.helper.TableHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -16,7 +15,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.Table;
-import java.util.Map;
 
 /**
  * Description: 使用spring 获取注解类

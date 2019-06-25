@@ -1,7 +1,6 @@
 package com.sxmd.base;
 
 import com.sxmd.mapper.*;
-import com.sxmd.mybatistest.entity.MyTestEntity;
 
 /**
  * Description: 通用接口

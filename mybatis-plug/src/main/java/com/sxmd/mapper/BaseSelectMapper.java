@@ -1,6 +1,5 @@
 package com.sxmd.mapper;
 
-import com.sxmd.mybatistest.entity.MyTestEntity;
 import com.sxmd.provider.BaseSelectProvider;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.SelectProvider;

@@ -1,12 +1,9 @@
 package com.sxmd.provider;
 
 import com.sxmd.base.Example;
-import com.sxmd.helper.EntityHelper;
 import com.sxmd.helper.ProviderHelper;
 import com.sxmd.helper.SqlHelper;
 import org.apache.ibatis.builder.annotation.ProviderContext;
-
-import java.util.Map;
 
 
 /**
