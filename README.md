@@ -15,4 +15,4 @@
 
 1.common java 的公用模块
 2.generator  代码生成模板
-3.mybatis-plug  对mybatis 进行封装  通用单表的增删查改和扩展（现仅支持mysql，很容易改造成自己需要的数据库版本）
+3.mybatis-plug  对mybatis 进行封装  通用单表的增删查改和扩展（现仅支持mysql，初学者都很容易改造成自己需要的数据库版本）
