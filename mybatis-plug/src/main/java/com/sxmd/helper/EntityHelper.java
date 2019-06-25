@@ -138,14 +138,14 @@ public class EntityHelper {
      * @date  2019/6/20 18:12
      */
     public static String setPkIdName(Class<?> aClass){
-        List<Field> fields = getAllFieldsList(aClass);
-        for (int i = 0; i < fields.size(); i++) {
-            Field field = fields.get(i);
-            if(field.isAnnotationPresent(Id.class)){
-                return field.getName();
-            }
+        Field field = getAllFieldsList(aClass).stream()
+                .filter(x -> x.isAnnotationPresent(Id.class))
+                .findFirst().get();
+        if(Objects.isNull(field)){
+            return "id";
+        }else {
+            return field.getName();
         }
-        return "id";
     }
 
     /**

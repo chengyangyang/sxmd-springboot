@@ -2,6 +2,7 @@ package com.sxmd;
 
 import com.sxmd.helper.EntityHelper;
 import com.sxmd.mybatistest.entity.MyTestEntity;
+import com.sxmd.mybatistest.service.MyTestService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -11,8 +12,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * Description:
@@ -24,12 +31,19 @@ import java.util.stream.IntStream;
 
 public class MyTest1 {
 
+
+
     public static void main(String[] args) {
-        //(#{list[{0}].name},#{list[{0}].comInfo},#{list[{0}].age},#{list[{0}].id}),
-        String pattern1 = " (#'{'list[{0}].name'}',#'{'list[{0}].comInfo'}',#'{'list[{0}].age'}',#'{'list[{0}].id'}')";
-        //使用默认的本地化对象格式化字符串
-        String format = MessageFormat.format(pattern1, 1);
-        System.out.println(format);
+        List<MyTest2> list = Arrays.asList(
+                new MyTest2(5, "a"),
+                new MyTest2(12, "b"),
+                new MyTest2(11, "b"),
+                new MyTest2(8, "c")
+        );
+
+        String reduce = list.stream().map(x -> x.getName() + ",").reduce("1",String::concat);
+        System.out.println(reduce);
+
 
     }
 
