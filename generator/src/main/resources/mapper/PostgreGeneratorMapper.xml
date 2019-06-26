@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sxmd.database.dao.PostgreGeneratorDao">
+
+
+    <select id="getAllTable" resultType="com.sxmd.database.bean.TableEntity">
+        select relname as table_name,
+        cast(obj_description(relfilenode,'pg_class') as varchar) as table_comment
+        from pg_class c
+        where  relkind = 'r' and relname not like 'pg_%' and relname not like 'sql_%' order by relname
+    </select>
+
+    <select id="getOneTable" resultType="com.sxmd.database.bean.TableEntity">
+        select relname as table_name,cast(obj_description(relfilenode,'pg_class') as varchar) as table_comment
+        from pg_class c
+        where  relkind = 'r' and relname not like 'pg_%' and relname not like 'sql_%'
+        and relname = #{tableName}
+    </select>
+
+    <select id="getColumnsByTable" resultType="com.sxmd.database.bean.ColumnEntity">
+        select a.attname as column_name, pg_type.typname as column_type, col_description(a.attrelid,a.attnum) as column_comment, a.attnotnull as is_null
+		from pg_class as c, pg_attribute as a
+		inner join pg_type on pg_type.oid = a.atttypid
+		left join pg_constraint t3 on a.attnum = t3.conkey[1] and a.attrelid = t3.conrelid
+		where c.relname = #{tableName} and a.attrelid = c.oid and a.attnum>0
+    </select>
+</mapper>

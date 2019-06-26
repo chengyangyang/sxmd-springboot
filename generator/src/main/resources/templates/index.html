@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>代码生成</title>
+</head>
+<body>
+
+    <table>
+        <thead><tr><td>选择</td><td>表名称</td><td>表注释</td><td>创建时间</td><td>引擎</td></tr></thead>
+    <#list data as li>
+    <tr>
+        <td><input type="radio" name="tableName" value="${li.tableName}"></td>
+        <td>${li.tableName}</td>
+        <td>${li.tableComment}</td>
+        <td>${li.createTime?string('yyyy-MM-dd')}</td>
+        <td>${li.engine}</td>
+    </tr>
+    </#list>
+    </table>
+
+    <form>
+        <input id="tableNameValue" type="hidden" name="value" value="">
+        <input type="submit" value="提交" onclick="btn()">
+    </form>
+
+    <script>
+        window.onload = function () {
+            function btn(){
+                var tableName = document.getElementsByName("tableName");
+                document.getElementById("tableNameValue").value = tableName;
+            }
+        }
+    </script>
+</body>
+</html>

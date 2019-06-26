@@ -12,10 +12,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.concurrent.CountDownLatch;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -32,20 +35,21 @@ import java.util.stream.Stream;
 public class MyTest1 {
 
 
-
-    public static void main(String[] args) {
-        List<MyTest2> list = Arrays.asList(
-                new MyTest2(5, "a"),
-                new MyTest2(12, "b"),
-                new MyTest2(11, "b"),
-                new MyTest2(8, "c")
-        );
-
-        String reduce = list.stream().map(x -> x.getName() + ",").reduce("1",String::concat);
-        System.out.println(reduce);
-
-
+    public static MyTest2 getV(MyTest2 a, Predicate<MyTest2> pre,Consumer<MyTest2> con){
+        if(pre.test(a)){
+            con.accept(a);
+        }
+        return a;
     }
 
+
+    public static void main(String[] args) {
+        MyTest2 a = new MyTest2(12,"ce");
+        System.out.println(getV(a,x-> x.getAge() > 11,x->{
+            System.out.println("函数式编程方法");
+            x.setAge(13);
+        }).toString());
+        System.out.println(getV(a,x-> x.getAge() > 12,x->x.setAge(13)).toString());
+    }
 
 }
