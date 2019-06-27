@@ -19,7 +19,7 @@ public class FtlEntity {
     //  文件名称{0} 表示 用表转化后的名称进行替换
     private String createFileName = "{0}.java";
 
-    public FtlEntity(String ftlName, String createFilePath,String creacreateFileNameteFilePath) {
+    public FtlEntity(String ftlName, String createFilePath,String createFileName) {
         this.ftlName = ftlName;
         this.createFilePath = createFilePath;
         this.createFileName = createFileName;

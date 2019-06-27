@@ -19,6 +19,10 @@ public class FtlConfig {
 
     static {
         map.put("hollysys/entity.ftl",new FtlEntity("hollysys/entity.ftl","E:\\","{0}.java"));
+        map.put("hollysys/AddModel.ftl",new FtlEntity("hollysys/AddModel.ftl","E:\\","{0}AddModel.java"));
+        map.put("hollysys/EditModel.ftl",new FtlEntity("hollysys/EditModel.ftl","E:\\","{0}EditModel.java"));
+        map.put("hollysys/ListModel.ftl",new FtlEntity("hollysys/ListModel.ftl","E:\\","{0}ListModel.java"));
+        map.put("hollysys/Model.ftl",new FtlEntity("hollysys/Model.ftl","E:\\","{0}Model.java"));
     }
 
     public static FtlEntity getFtlEntity(String templateName){
