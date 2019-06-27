@@ -20,6 +20,7 @@ spring:
     suffix: .html
     settings:
       template_update_delay: 0
+      classic_compatible: true
 
 # mybatis
 mybatis:

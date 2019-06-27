@@ -16,6 +16,7 @@ import java.io.File;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Description:
@@ -62,23 +63,30 @@ public class GeneratorServiceImpl implements GeneratorService{
     /**
      * Description:   对列 进行相应的处理
      * @author cy
+     * @param isFilterColumns:
      * @param tableName:
      * @return java.util.List<com.sxmd.database.bean.ColumnEntity>
      * @date  2019/6/26 16:59
      */
     @Override
-    public List<ColumnEntity> getColumnsByTableInit(String tableName){
+    public List<ColumnEntity> getColumnsByTableInit(boolean isFilterColumns,String tableName){
         List<ColumnEntity> columnsByTable = postgreDao.getColumnsByTable(tableName);
         columnsByTable.forEach(x->{
             x.setColumnNameToJava(StringUtils.camelCaseName(x.getColumnName()));
             x.setColumnTypeToJava(SqlToJavaHelp.getJavaTypeBySqlType(x.getColumnType()));
         });
-        return columnsByTable;
+        if(isFilterColumns){
+            // 对集合进行过滤
+            return columnsByTable.stream().filter(x->!SqlToJavaHelp.filterSqlColumns(x.getColumnName())).collect(Collectors.toList());
+        }else {
+            return columnsByTable;
+        }
     }
 
     /**
      * Description:   文件生成
      * @author cy
+     * @param isFilterColumns: 是否进行数据过滤
      * @param tableName: 是否使用表名称
      * @param templateName: 模板名称
      * @param map:  数据
@@ -86,7 +94,7 @@ public class GeneratorServiceImpl implements GeneratorService{
      * @date  2019/6/26 17:09
      */
     @Override
-    public void generatorJavaFile(String tableName,String templateName, Map<String,Object> map){
+    public void generatorJavaFile(boolean isFilterColumns,String tableName,String templateName, Map<String,Object> map){
         FtlEntity ftlEntity = FtlConfig.getFtlEntity(templateName);
         String filePath = ftlEntity.getCreateFilePath();
         String fileName = ftlEntity.getCreateFileName();
@@ -101,7 +109,7 @@ public class GeneratorServiceImpl implements GeneratorService{
         // 如果输入的表名称不是空的，把表的字段进入
         if(StringUtils.isNotBlank(tableName) && fileName.contains(".java")){
             TableEntity table = this.getTableByTableNameAndInit(tableName);
-            List<ColumnEntity> columns = this.getColumnsByTableInit(tableName);
+            List<ColumnEntity> columns = this.getColumnsByTableInit(isFilterColumns,tableName);
             map.put("table",table);
             map.put("columns",columns);
             // 对文件进行处理（替换标识符的内容）

@@ -37,21 +37,23 @@ public interface GeneratorService {
     /**
      * Description:  初始化表中的列
      * @author cy
+     * @param isFilterColumns: 是否进行列的过滤
      * @param tableName:
      * @return java.util.List<com.sxmd.database.bean.ColumnEntity>
      * @date  2019/6/26 17:17
      */
-    List<ColumnEntity> getColumnsByTableInit(String tableName);
+    List<ColumnEntity> getColumnsByTableInit(boolean isFilterColumns,String tableName);
 
     /**
      * Description:   进行文件的生成   如果填写表名称，并且生成Java 文件，就会将字段和表的对象放进map中，并且文件名称会进行替换  否则按照原本的生成
      * @author cy
+     * @param isFilterColumns: 是否进行列的过滤
      * @param tableName: 表名称   如果需要表名称拼接Java生成文件
      * @param templateName: 模板名称   和 FtlConfig 中 key名称相同
      * @param map:  值
      * @return void
      * @date  2019/6/26 17:17
      */
-    public void generatorJavaFile(String tableName,String templateName, Map<String,Object> map);
+    public void generatorJavaFile(boolean isFilterColumns,String tableName,String templateName, Map<String,Object> map);
 
 }

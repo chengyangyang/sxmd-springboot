@@ -4,7 +4,9 @@ import com.sxmd.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,10 +22,23 @@ public class SqlToJavaHelp {
 
     private static Map map = new HashMap<String,String>();
 
+    private static List list = new ArrayList<String>();
+
     static {
+        // 类型转化
         map.put("varchar","String");
         map.put("timestamp","Date");
         map.put("bool","boolean");
+
+        // 字段过滤
+        list.add("cs");
+        list.add("pkid");
+        list.add("ct");
+        list.add("cu");
+        list.add("mt");
+        list.add("mu");
+        list.add("cd");
+        list.add("co");
     }
 
     /**
@@ -40,6 +55,17 @@ public class SqlToJavaHelp {
             log.error("没有找到对应的Java类型！");
         }
         return str;
+    }
+
+    /**
+     * Description:   对该字段是否进行过滤
+     * @author cy
+     * @param sqlColumnsName:
+     * @return boolean
+     * @date  2019/6/27 9:04
+     */
+    public static boolean filterSqlColumns(String sqlColumnsName){
+        return list.contains(sqlColumnsName);
     }
 
     /**

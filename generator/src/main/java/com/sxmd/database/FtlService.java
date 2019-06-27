@@ -22,7 +22,7 @@ public class FtlService {
 
     public void generatorEntity(String tableName){
         HashMap<String, Object> map = new HashMap<>();
-        generatorService.generatorJavaFile(tableName,"hollysys/entity.ftl",map);
+        generatorService.generatorJavaFile(true,tableName,"hollysys/entity.ftl",map);
     }
 
 
