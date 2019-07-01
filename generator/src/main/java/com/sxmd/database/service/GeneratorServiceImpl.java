@@ -10,6 +10,7 @@ import com.sxmd.database.bean.TableEntity;
 import com.sxmd.help.SqlToJavaHelp;
 import com.sxmd.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -28,6 +29,8 @@ import java.util.stream.Collectors;
 @Service
 public class GeneratorServiceImpl implements GeneratorService{
 
+    @Value("${sxmd.basedate}")
+    private String database;
     @Autowired
     private MysqlGeneratorDao mysqlDao;
     @Autowired
@@ -42,7 +45,13 @@ public class GeneratorServiceImpl implements GeneratorService{
      */
     @Override
     public List<TableEntity> getTableAll(String tableName){
-        return postgreDao.getAllTable(tableName);
+        if(database.equals("postgresql")){
+            return postgreDao.getAllTable(tableName);
+        }else if (database.equals("mysql")){
+            return mysqlDao.getAllTable(tableName);
+        }else {
+            return postgreDao.getAllTable(tableName);
+        }
     }
 
 
@@ -70,7 +79,7 @@ public class GeneratorServiceImpl implements GeneratorService{
      */
     @Override
     public List<ColumnEntity> getColumnsByTableInit(boolean isFilterColumns,String tableName){
-        List<ColumnEntity> columnsByTable = postgreDao.getColumnsByTable(tableName);
+        List<ColumnEntity> columnsByTable = getColumnsByTable(tableName);
         columnsByTable.forEach(x->{
             x.setColumnNameToJava(StringUtils.camelCaseName(x.getColumnName()));
             x.setColumnTypeToJava(SqlToJavaHelp.getJavaTypeBySqlType(x.getColumnType()));
@@ -116,7 +125,6 @@ public class GeneratorServiceImpl implements GeneratorService{
             fileName = MessageFormat.format(ftlEntity.getCreateFileName(), new Object[]{table.getTableNameToJavaName()});
             map.put("fileName",fileName.substring(0,fileName.lastIndexOf(".")));
         }
-
         FreemarkerConfig.generatorFile(templateName,filePath + fileName,map);
     }
 
@@ -128,10 +136,29 @@ public class GeneratorServiceImpl implements GeneratorService{
      * @date  2019/6/26 16:51
      */
     private TableEntity getOneTable(String tableName){
-        return postgreDao.getOneTable(tableName);
+        if(database.equals("postgresql")){
+            return postgreDao.getOneTable(tableName);
+        }else if (database.equals("mysql")){
+            return mysqlDao.getOneTable(tableName);
+        }else {
+            return postgreDao.getOneTable(tableName);
+        }
     }
 
+    /**
+     * Description:   得到数据库的字段列
+     * @author cy
+     * @param tableName:
+     * @return java.util.List<com.sxmd.database.bean.ColumnEntity>
+     * @date  2019/7/1 18:00
+     */
     private List<ColumnEntity> getColumnsByTable(String tableName){
-        return postgreDao.getColumnsByTable(tableName);
+        if(database.equals("postgresql")){
+            return postgreDao.getColumnsByTable(tableName);
+        }else if (database.equals("mysql")){
+            return mysqlDao.getColumnsByTable(tableName);
+        }else {
+            return postgreDao.getColumnsByTable(tableName);
+        }
     }
 }

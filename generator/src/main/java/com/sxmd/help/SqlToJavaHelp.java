@@ -29,6 +29,8 @@ public class SqlToJavaHelp {
         map.put("varchar","String");
         map.put("timestamp","Date");
         map.put("bool","boolean");
+        map.put("int4","Integer");
+
 
         // 字段过滤
         list.add("cs");
@@ -52,7 +54,7 @@ public class SqlToJavaHelp {
         String str = (String)map.get(sqlType);
         if(StringUtils.isBlank(str)){
             str = sqlType;
-            log.error("没有找到对应的Java类型！");
+            log.error("没有找到对应的Java类型！"+ sqlType);
         }
         return str;
     }

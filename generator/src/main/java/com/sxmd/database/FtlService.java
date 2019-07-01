@@ -27,6 +27,13 @@ public class FtlService {
         generatorService.generatorJavaFile(true,tableName,"hollysys/ListModel.ftl",map);
         generatorService.generatorJavaFile(true,tableName,"hollysys/Model.ftl",map);
         generatorService.generatorJavaFile(true,tableName,"hollysys/entity.ftl",map);
+
+        generatorService.generatorJavaFile(true,tableName,"hollysys/dao.ftl",map);
+        generatorService.generatorJavaFile(true,tableName,"hollysys/controller.ftl",map);
+        generatorService.generatorJavaFile(true,tableName,"hollysys/service.ftl",map);
+        generatorService.generatorJavaFile(true,tableName,"hollysys/serviceimpl.ftl",map);
+        generatorService.generatorJavaFile(true,tableName,"hollysys/xml.ftl",map);
+
     }
 
 

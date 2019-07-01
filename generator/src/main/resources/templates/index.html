@@ -4,37 +4,90 @@
     <meta charset="UTF-8">
     <title>代码生成</title>
 </head>
+<style>
+    #content{
+        width: 60%;
+        margin: auto;
+    }
+    thead{
+        text-align: center;
+        background-color: #aaaaaa;
+    }
+    table.dataintable {
+        margin-top:15px;
+        border-collapse:collapse;
+        border:1px solid #aaa;
+        width:100%;
+    }
+    table.dataintable th {
+        vertical-align:baseline;
+        padding:5px 15px 5px 6px;
+        background-color:#3F3F3F;
+        border:1px solid #3F3F3F;
+        text-align:left;
+        color:#fff;
+    }
+    table.dataintable td {
+        vertical-align:text-top;
+        padding:6px 15px 6px 6px;
+        border:1px solid #aaa;
+    }
+    table.dataintable tr:nth-child(odd) {
+        background-color:#F5F5F5;
+    }
+    table.dataintable tr:nth-child(even) {
+        background-color:#fff;
+    }
+</style>
+
 <body>
+    <div>
+        <div id="content">
+            <iframe width="420" scrolling="no" height="60" frameborder="0" allowtransparency="true" src="//i.tianqi.com/index.php?c=code&id=12&icon=1&num=5&site=12"></iframe>
+            <div style="text-align: center"><h1>数据库</h1></div>
+            <form>
+                <input name="inputTableName" value="${inputTableName}" placeholder="请输入表名称">
+                <input type="submit" value="查 询" >
+            </form>
+            <table class="dataintable">
+                <thead><tr><td>选择</td><td>表名称</td><td>表注释</td><td>创建时间</td><td>引擎</td></tr></thead>
+                <#list data as li>
+                <tr>
+                    <td><center><input type="radio" name="tableName" value="${li.tableName}"></center></td>
+                    <td>${li.tableName}</td>
+                    <td>${li.tableComment}</td>
+                    <td>
+                        <#if li.createTime??>
+                        ${li.createTime?string('yyyy-MM-dd')}
+                    </#if>
+                    </td>
+                    <td>${li.engine}</td>
+                </tr>
+            </#list>
+            </table>
 
-    <table>
-        <thead><tr><td>选择</td><td>表名称</td><td>表注释</td><td>创建时间</td><td>引擎</td></tr></thead>
-    <#list data as li>
-    <tr>
-        <td><input type="radio" name="tableName" value="${li.tableName}"></td>
-        <td>${li.tableName}</td>
-        <td>${li.tableComment}</td>
-        <td>
-            <#if li.createTime??>
-            ${li.createTime?string('yyyy-MM-dd')}
-            </#if>
-        </td>
-        <td>${li.engine}</td>
-    </tr>
-    </#list>
-    </table>
+            <form action="/generate" style="text-align: center;margin-bottom: 50px">
+                <input id="tableNameValue" type="hidden" name="tableNameValue" >
+                <input style="background-color: skyblue;width: 100px; margin-top: 30px;" type="submit" value="提 交" onclick="btn()">
+            </form>
+        </div>
+    </div>
+</body>
 
-    <form>
-        <input id="tableNameValue" type="hidden" name="value" value="">
-        <input type="submit" value="提交" onclick="btn()">
-    </form>
-
-    <script>
-        window.onload = function () {
-            function btn(){
-                var tableName = document.getElementsByName("tableName");
-                document.getElementById("tableNameValue").value = tableName;
+<script>
+    function btn(){
+        var tableName = document.getElementsByName("tableName");
+        var tableNameValue;
+        for(var i=0; i<tableName.length; i ++){
+            if(tableName[i].checked){
+                tableNameValue = tableName[i].value;
             }
         }
-    </script>
-</body>
+        if(tableNameValue == "undefined" || tableNameValue == null){
+            alert("请选择一个表！");
+        }
+        document.getElementById("tableNameValue").value = tableNameValue;
+    }
+
+</script>
 </html>

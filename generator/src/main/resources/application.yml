@@ -30,6 +30,10 @@ mybatis:
     map-underscore-to-camel-case: true
 
 
+# generator 配置
+# 支持 postgresql /mysql/
 
+sxmd:
+  basedate: postgresql
 
 

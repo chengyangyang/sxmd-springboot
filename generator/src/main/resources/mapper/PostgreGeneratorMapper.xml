@@ -7,7 +7,11 @@
         select relname as table_name,
         cast(obj_description(relfilenode,'pg_class') as varchar) as table_comment
         from pg_class c
-        where  relkind = 'r' and relname not like 'pg_%' and relname not like 'sql_%' order by relname
+        where  relkind = 'r' and relname not like 'pg_%' and relname not like 'sql_%'
+        <if test="tableName != null and tableName != ''">
+            and relname like concat('%',#{tableName},'%')
+        </if>
+        order by relname
     </select>
 
     <select id="getOneTable" resultType="com.sxmd.database.bean.TableEntity">

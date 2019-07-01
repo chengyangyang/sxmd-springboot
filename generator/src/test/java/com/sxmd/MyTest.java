@@ -23,6 +23,6 @@ public class MyTest {
 
     @Test
     public void gen(){
-        service.generatorEntity("m_equipment_type");
+        service.generatorEntity("vibration_sensor_param_config");
     }
 }

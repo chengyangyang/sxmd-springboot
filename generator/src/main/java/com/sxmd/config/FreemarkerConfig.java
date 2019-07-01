@@ -3,6 +3,8 @@ package com.sxmd.config;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.Map;
@@ -15,6 +17,8 @@ import java.util.Map;
  * Version 1.0
  */
 public class FreemarkerConfig {
+
+    private static Logger log = LoggerFactory.getLogger(FreemarkerConfig.class);
 
     private static Configuration cfg;
 
@@ -42,6 +46,7 @@ public class FreemarkerConfig {
             template = getConfiguration().getTemplate(templateName);
             Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(filePath))));
             template.process(map,out);
+            log.debug("文件生成路径---->"+filePath);
             out.close();
         } catch (IOException e) {
             e.printStackTrace();
