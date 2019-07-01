@@ -8,9 +8,22 @@
         FROM INFORMATION_SCHEMA.TABLES
         WHERE TABLE_SCHEMA = (select DATABASE())
         <if test="tableName != null and tableName != ''">
-            and table_name like cancat('%',#{tableName},'%')
+            and table_name like concat('%',#{tableName},'%')
         </if>
         ORDER BY create_time DESC
+    </select>
+
+    <select id="getOneTable" resultType="com.sxmd.database.bean.TableEntity">
+        SELECT table_name,engine,table_comment,create_time
+        FROM INFORMATION_SCHEMA.TABLES
+        WHERE TABLE_SCHEMA = (select DATABASE())
+        and table_name = #{tableName}
+    </select>
+
+    <select id="getColumnsByTable" resultType="com.sxmd.database.bean.ColumnEntity">
+        select column_name,data_type as columnType,table_name,column_comment as columnComment from information_schema.columns
+        where table_schema =(select DATABASE())
+        and table_name = #{tableName};
     </select>
 
 </mapper>
