@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+
+    var msg = {};
+    var map = {};
+
+    var date = new Date("2018-07-01");
+    var month = date.getMonth() + 1
+    var curYear = date.getFullYear();
+    var curMonth = month;
+    msg.payload = [curYear,curMonth]
+    console.log(msg.payload);
+</script>
+
+</body>
+</html>
