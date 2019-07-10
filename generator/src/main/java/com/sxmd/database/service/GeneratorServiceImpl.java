@@ -45,9 +45,9 @@ public class GeneratorServiceImpl implements GeneratorService{
      */
     @Override
     public List<TableEntity> getTableAll(String tableName){
-        if(database.equals("postgresql")){
+        if("postgresql".equals(database)){
             return postgreDao.getAllTable(tableName);
-        }else if (database.equals("mysql")){
+        }else if ("mysql".equals(database)){
             return mysqlDao.getAllTable(tableName);
         }else {
             return postgreDao.getAllTable(tableName);
@@ -136,9 +136,9 @@ public class GeneratorServiceImpl implements GeneratorService{
      * @date  2019/6/26 16:51
      */
     private TableEntity getOneTable(String tableName){
-        if(database.equals("postgresql")){
+        if("postgresql".equals(database)){
             return postgreDao.getOneTable(tableName);
-        }else if (database.equals("mysql")){
+        }else if ("mysql".equals(database)){
             return mysqlDao.getOneTable(tableName);
         }else {
             return postgreDao.getOneTable(tableName);
@@ -153,9 +153,9 @@ public class GeneratorServiceImpl implements GeneratorService{
      * @date  2019/7/1 18:00
      */
     private List<ColumnEntity> getColumnsByTable(String tableName){
-        if(database.equals("postgresql")){
+        if("postgresql".equals(database)){
             return postgreDao.getColumnsByTable(tableName);
-        }else if (database.equals("mysql")){
+        }else if ("mysql".equals(database)){
             return mysqlDao.getColumnsByTable(tableName);
         }else {
             return postgreDao.getColumnsByTable(tableName);
