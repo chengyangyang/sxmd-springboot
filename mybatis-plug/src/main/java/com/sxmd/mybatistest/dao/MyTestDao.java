@@ -16,5 +16,12 @@ import java.util.Map;
 @Mapper
 public interface MyTestDao extends BaseSelectMapper<MyTestEntity>, BaseInsertMapper<MyTestEntity>, BaseUpdateMapper<MyTestEntity> , BaseDeleteMapper<MyTestEntity> , BaseExampleMapper<MyTestEntity> {
 
+    /**
+     * Description:   测试接口
+     * @author cy
+     * @param id:
+     * @return java.lang.String
+     * @date  2019/7/15 11:31
+     */
     public String getName(String id);
 }

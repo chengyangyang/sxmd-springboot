@@ -32,7 +32,7 @@ public class FreemarkerConfig {
     }
 
     /**
-     * Description:
+     * Description: 模板的生成
      * @author cy
      * @param templateName: 模板名称
      * @param filePath: 文件生成路径
@@ -44,7 +44,7 @@ public class FreemarkerConfig {
         Template template = null;
         try {
             template = getConfiguration().getTemplate(templateName);
-            Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(filePath))));
+            Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(filePath)),"utf-8"));
             template.process(map,out);
             log.debug("文件生成路径---->"+filePath);
             out.close();

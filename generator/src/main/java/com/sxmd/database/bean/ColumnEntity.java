@@ -12,23 +12,35 @@ import lombok.Data;
 @Data
 public class ColumnEntity {
 
-    // 列名称
+    /**
+     *  列名称
+     */
     private String columnName;
 
-    // 列类型
+    /**
+     *  列类型
+     */
     private String columnType;
 
-    // 列注释
+    /**
+     *  列注释
+     */
     private String columnComment;
 
-    // 是否为空
+    /**
+     *  是否为空
+     */
     private boolean isNull;
 
-    // -------------------------------
-    // 列名称转化Java名称
+    /**
+     *  -------------------------------
+     *  列名称转化Java名称
+     */
     private String columnNameToJava;
 
-    // 列类型 转化成Java名称
+    /**
+     *  列类型 转化成Java名称
+     */
     private String columnTypeToJava;
 
 }

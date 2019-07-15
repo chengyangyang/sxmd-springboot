@@ -7,14 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Description: 启动类
+ * Description: 启动类 @SpringBootApplication same as @Configuration @EnableAutoConfiguration @ComponentScan
  *
  * @author cy
  * @date 2019年06月18日 9:33
  * Version 1.0
  */
 @RestController
-// same as @Configuration @EnableAutoConfiguration @ComponentScan
 @SpringBootApplication
 public class SxmdApplication {
 

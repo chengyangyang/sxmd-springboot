@@ -18,13 +18,21 @@ import java.util.Set;
 @Accessors(chain = true)
 public class EntityTable {
 
-    // 表名称
+    /**
+     * 表名称
+     */
     private String tableSqlName;
-    // 主键名称
+    /**
+     * 主键名称
+     */
     private String pkIdName;
-    // 主键名称
+    /**
+     * 主键名称
+     */
     private String pkIdSqlName;
-    // 列名称集合（key 是字段名称   value 是数据库字段数据）
+    /**
+     * 列名称集合（key 是字段名称   value 是数据库字段数据）
+     */
     private LinkedHashMap<String,String> columnExcludePkId;
 
 }

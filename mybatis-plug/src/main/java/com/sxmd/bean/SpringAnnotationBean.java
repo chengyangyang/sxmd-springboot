@@ -24,7 +24,7 @@ import javax.persistence.Table;
  * Version 1.0
  */
 @Component
-@Scope(value="singleton") // 单例
+@Scope(value="singleton")
 public class SpringAnnotationBean implements BeanFactoryPostProcessor, ApplicationContextAware, ApplicationRunner {
 
     Logger log = LoggerFactory.getLogger(SpringAnnotationBean.class);

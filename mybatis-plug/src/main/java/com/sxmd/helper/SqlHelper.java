@@ -15,14 +15,20 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class SqlHelper {
 
-    // 存储getSqlColumns 的信息（通用）
-    private static final Map<Class<?>, String> sqlColumnsMap = new ConcurrentHashMap();
+    /**
+     * 存储getSqlColumns 的信息（通用）
+     */
+    private static final Map<Class<?>, String> SQL_COLUMNS_MAP = new ConcurrentHashMap();
 
-    // 存储 getSqlInsertColumns 的信息（通用 带主键）
-    private static final Map<Class<?>, String> sqlInsertColumnsMap = new ConcurrentHashMap();
+    /**
+     * 存储 getSqlInsertColumns 的信息（通用 带主键）
+     */
+    private static final Map<Class<?>, String> SQL_INSERT_COLUMNS_MAP = new ConcurrentHashMap();
 
-    // 存储 getSqlInsertColumns 的信息（通用 不带主键）
-    private static final Map<Class<?>, String> sqlInsertColumnsNotIdMap = new ConcurrentHashMap();
+    /**
+     * 存储 getSqlInsertColumns 的信息（通用 不带主键）
+     */
+    private static final Map<Class<?>, String> SQL_INSERT_COLUMNS_NOT_ID_MAP = new ConcurrentHashMap();
 
     /**
      * Description:   获取所有的列(用逗号隔开 含有主键)
@@ -32,7 +38,7 @@ public class SqlHelper {
      * @date  2019/6/20 18:21
      */
     public static String getSqlColumns(final Class<?> aClass){
-        return sqlColumnsMap.get(aClass);
+        return SQL_COLUMNS_MAP.get(aClass);
     }
 
     /**
@@ -49,7 +55,7 @@ public class SqlHelper {
             sqlColums.append(co.getValue() + ",");
         }
         sqlColums.append(getPkIdSqlName(aClass));
-        sqlColumnsMap.put(aClass,sqlColums.toString());
+        SQL_COLUMNS_MAP.put(aClass,sqlColums.toString());
     }
 
 
@@ -135,9 +141,9 @@ public class SqlHelper {
      */
     public static String getSqlInsertColumns(Class<?> aClass,boolean isHasId) {
         if(isHasId){
-            return sqlInsertColumnsMap.get(aClass);
+            return SQL_INSERT_COLUMNS_MAP.get(aClass);
         }else {
-            return sqlInsertColumnsNotIdMap.get(aClass);
+            return SQL_INSERT_COLUMNS_NOT_ID_MAP.get(aClass);
         }
     }
 
@@ -162,7 +168,7 @@ public class SqlHelper {
         valueColums.append("#{"+EntityHelper.getPkIdName(aClass)+"}");
         // 拼接生成新的语句
         String sql = "(" + sqlColums.toString() + ") " + "values" + " (" + valueColums.toString() + ")";
-        sqlInsertColumnsMap.put(aClass,sql);
+        SQL_INSERT_COLUMNS_MAP.put(aClass,sql);
     }
 
     /**
@@ -184,7 +190,7 @@ public class SqlHelper {
         }
         // 拼接生成新的语句
         String sql = "(" + sqlColums.toString().substring(0,sqlColums.length() - 1) + ") " + "values" + " (" + valueColums.toString().substring(0,valueColums.length() - 1) + ")";
-        sqlInsertColumnsNotIdMap.put(aClass,sql);
+        SQL_INSERT_COLUMNS_NOT_ID_MAP.put(aClass,sql);
     }
 
     /**

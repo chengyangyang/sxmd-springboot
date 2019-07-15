@@ -8,7 +8,7 @@ import com.sxmd.database.dao.PostgreGeneratorDao;
 import com.sxmd.database.bean.ColumnEntity;
 import com.sxmd.database.bean.TableEntity;
 import com.sxmd.help.SqlToJavaHelp;
-import com.sxmd.utils.StringUtils;
+import com.sxmd.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -36,6 +36,10 @@ public class GeneratorServiceImpl implements GeneratorService{
     @Autowired
     private PostgreGeneratorDao postgreDao;
 
+    private final static String DATABASE_POSTGRESQL = "postgresql";
+    private final static String DATABASE_MYSQL = "mysql";
+    private final static String FILE_SUFFIX = ".java";
+
     /**
      * Description:   查询列表
      * @author cy
@@ -45,9 +49,9 @@ public class GeneratorServiceImpl implements GeneratorService{
      */
     @Override
     public List<TableEntity> getTableAll(String tableName){
-        if("postgresql".equals(database)){
+        if(DATABASE_POSTGRESQL.equals(database)){
             return postgreDao.getAllTable(tableName);
-        }else if ("mysql".equals(database)){
+        }else if (DATABASE_MYSQL.equals(database)){
             return mysqlDao.getAllTable(tableName);
         }else {
             return postgreDao.getAllTable(tableName);
@@ -81,7 +85,7 @@ public class GeneratorServiceImpl implements GeneratorService{
     public List<ColumnEntity> getColumnsByTableInit(boolean isFilterColumns,String tableName){
         List<ColumnEntity> columnsByTable = getColumnsByTable(tableName);
         columnsByTable.forEach(x->{
-            x.setColumnNameToJava(StringUtils.camelCaseName(x.getColumnName()));
+            x.setColumnNameToJava(StringUtil.camelCaseName(x.getColumnName()));
             x.setColumnTypeToJava(SqlToJavaHelp.getJavaTypeBySqlType(x.getColumnType()));
         });
         if(isFilterColumns){
@@ -113,10 +117,12 @@ public class GeneratorServiceImpl implements GeneratorService{
                 throw new RuntimeException("文件路径只能为文件夹");
             }
         }else {
-            file.mkdirs();
+            if(!file.mkdirs()){
+                throw new RuntimeException("文件夹创建失败");
+            }
         }
         // 如果输入的表名称不是空的，把表的字段进入
-        if(StringUtils.isNotBlank(tableName) && fileName.contains(".java")){
+        if(StringUtil.isNotBlank(tableName) && fileName.contains(FILE_SUFFIX)){
             TableEntity table = this.getTableByTableNameAndInit(tableName);
             List<ColumnEntity> columns = this.getColumnsByTableInit(isFilterColumns,tableName);
             map.put("table",table);
@@ -136,9 +142,9 @@ public class GeneratorServiceImpl implements GeneratorService{
      * @date  2019/6/26 16:51
      */
     private TableEntity getOneTable(String tableName){
-        if("postgresql".equals(database)){
+        if(DATABASE_POSTGRESQL.equals(database)){
             return postgreDao.getOneTable(tableName);
-        }else if ("mysql".equals(database)){
+        }else if (DATABASE_MYSQL.equals(database)){
             return mysqlDao.getOneTable(tableName);
         }else {
             return postgreDao.getOneTable(tableName);
@@ -153,9 +159,9 @@ public class GeneratorServiceImpl implements GeneratorService{
      * @date  2019/7/1 18:00
      */
     private List<ColumnEntity> getColumnsByTable(String tableName){
-        if("postgresql".equals(database)){
+        if(DATABASE_POSTGRESQL.equals(database)){
             return postgreDao.getColumnsByTable(tableName);
-        }else if ("mysql".equals(database)){
+        }else if (DATABASE_MYSQL.equals(database)){
             return mysqlDao.getColumnsByTable(tableName);
         }else {
             return postgreDao.getColumnsByTable(tableName);

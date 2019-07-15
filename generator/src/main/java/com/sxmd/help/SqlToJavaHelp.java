@@ -1,6 +1,6 @@
 package com.sxmd.help;
 
-import com.sxmd.utils.StringUtils;
+import com.sxmd.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,7 +52,7 @@ public class SqlToJavaHelp {
      */
     public static String getJavaTypeBySqlType(String sqlType){
         String str = (String)map.get(sqlType);
-        if(StringUtils.isBlank(str)){
+        if(StringUtil.isBlank(str)){
             str = sqlType;
             log.error("没有找到对应的Java类型！"+ sqlType);
         }
@@ -81,8 +81,8 @@ public class SqlToJavaHelp {
         // 截取第一个下划线前面的部分
         String substring = tableName.substring(tableName.indexOf("_"), tableName.length());
         // 驼峰式转化 并首字母大写
-        String capitalize = StringUtils.capitalize(substring);
-        return StringUtils.camelCaseName(capitalize);
+        String capitalize = StringUtil.capitalize(substring);
+        return StringUtil.camelCaseName(capitalize);
     }
 
 }

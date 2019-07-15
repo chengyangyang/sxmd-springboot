@@ -14,20 +14,27 @@ import java.util.Date;
 @Data
 public class TableEntity {
 
-    // 数据库表名称
+    /**
+     *  数据库表名称
+     */
     private String tableName;
-
-    // 引擎名称
+    /**
+     *  引擎名称
+     */
     private String engine;
-
-    // 表注释
+    /**
+     *  表注释
+     */
     private String tableComment;
-
-    // 创建时间
+    /**
+     *  创建时间
+     */
     private Date createTime;
-
-    //--------------------------------
-    // 表名转化后的名称 也就是类的名称
+    /**
+     *  --------------------------------
+     *  表名转化后的名称 也就是类的名称
+     *
+     */
     private String tableNameToJavaName;
 
 }

@@ -22,8 +22,10 @@ import java.util.stream.Collectors;
 public class EntityHelper {
 
 
-    // 存储所有的entity信息
-    private static final Map<Class<?>, EntityTable> entityTableMap = new ConcurrentHashMap();
+    /**
+     * 存储所有的entity信息
+     */
+    private static final Map<Class<?>, EntityTable> ENTITY_TABLE_MAP = new ConcurrentHashMap();
 
     /**
      * Description:   获取实体表名称
@@ -81,7 +83,7 @@ public class EntityHelper {
      * @date  2019/6/21 18:08
      */
     public static EntityTable getColumnNameList(Class<?> entityClass) {
-        EntityTable entityTable = entityTableMap.get(entityClass);
+        EntityTable entityTable = ENTITY_TABLE_MAP.get(entityClass);
         if (entityTable == null) {
             throw new SxmdException("无法获取实体类" + entityClass.getCanonicalName() + "对应的数据库类型!");
         } else {
@@ -110,12 +112,11 @@ public class EntityHelper {
     public static void intTableInfo(Map<String, Object> map){
         for(Map.Entry<String, Object> obj: map.entrySet()){
             Class<?> aClass = obj.getValue().getClass();
-            // 这个版本好像有问题不能用下面的进行判断
-            // Class<?> aClass = AopUtils.getTargetClass(obj.getValue());
+            // 这个版本好像有问题不能用下面的进行判断 Class<?> aClass = AopUtils.getTargetClass(obj.getValue());
             if(ClassUtils.isCglibProxyClass(aClass)){
                 aClass = aClass.getSuperclass();
             }
-            entityTableMap.put(aClass,
+            ENTITY_TABLE_MAP.put(aClass,
                     new EntityTable()
                             .setTableSqlName(setTableSqlName(aClass))
                             .setColumnExcludePkId(setColumnExcludePkId(aClass))

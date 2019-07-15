@@ -7,7 +7,7 @@ package com.sxmd.utils;
  * @date 2019年06月20日 14:27
  * Version 1.0
  */
-public class StringUtils extends org.apache.commons.lang3.StringUtils {
+public class StringUtil extends org.apache.commons.lang3.StringUtils {
 
     /**
      * Description:   驼峰式转化为下划线字符

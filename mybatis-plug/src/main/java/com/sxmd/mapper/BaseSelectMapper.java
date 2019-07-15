@@ -43,12 +43,13 @@ public interface BaseSelectMapper<T> {
     List<T> select(T var1);
 
 
-    /**
-     * Description:  条件查询数量
-     * @author cy
-     * @return java.util.List<T>
-     * @date  2019/6/21 16:00
-     */
+   /**
+    * Description:   条件查询数量
+    * @author cy
+    * @param var1:
+    * @return long
+    * @date  2019/7/15 11:36
+    */
     @SelectProvider(
             type = BaseSelectProvider.class,
             method = "selectCount"
