@@ -1,6 +1,6 @@
 package com.sxmd.base;
 
-import com.sxmd.helper.StringHelper;
+import com.sxmd.utils.StringUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +23,7 @@ public class Example {
     public Example andEqualTo(String property, Object value){
         String size = map.size() + "";
         sql.append(" and ");
-        sql.append(StringHelper.underscoreName(property));
+        sql.append(StringUtil.underscoreName(property));
         sql.append("= #{");
         sql.append("map.");
         sql.append(size);

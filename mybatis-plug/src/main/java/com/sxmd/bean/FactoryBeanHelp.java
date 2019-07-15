@@ -1,5 +1,7 @@
 package com.sxmd.bean;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.cglib.core.SpringNamingPolicy;
@@ -21,6 +23,7 @@ import java.lang.reflect.Proxy;
 public class FactoryBeanHelp<T> implements InitializingBean, FactoryBean<T> {
 
     private String innerClassName;
+    private static final Logger log = LoggerFactory.getLogger(FactoryBeanHelp.class);
 
     public void setInnerClassName(String innerClassName) {
         this.innerClassName = innerClassName;
@@ -44,7 +47,7 @@ public class FactoryBeanHelp<T> implements InitializingBean, FactoryBean<T> {
         try {
             return Class.forName(innerClassName);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            log.error("context",e);
         }
         return null;
     }
@@ -57,9 +60,10 @@ public class FactoryBeanHelp<T> implements InitializingBean, FactoryBean<T> {
     }
 }
   class InterfaceProxy implements InvocationHandler {
+      private static final Logger log = LoggerFactory.getLogger(InterfaceProxy.class);
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        System.out.println("ObjectProxy execute:" + method.getName());
+        log.debug("ObjectProxy execute:" + method.getName());
         return method.invoke(proxy, args);
     }
     public static <T> T newInstance(Class<T> innerInterface) {
@@ -70,9 +74,10 @@ public class FactoryBeanHelp<T> implements InitializingBean, FactoryBean<T> {
     }
 }
   class MethodInterceptorImpl implements MethodInterceptor {
+      private static final Logger log = LoggerFactory.getLogger(MethodInterceptorImpl.class);
     @Override
     public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
-        System.out.println("MethodInterceptorImpl:" + method.getName());
+        log.debug("MethodInterceptorImpl:" + method.getName());
         return methodProxy.invokeSuper(o, objects);
     }
 }

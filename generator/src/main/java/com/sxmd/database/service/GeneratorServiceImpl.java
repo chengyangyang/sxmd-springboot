@@ -7,6 +7,7 @@ import com.sxmd.database.dao.MysqlGeneratorDao;
 import com.sxmd.database.dao.PostgreGeneratorDao;
 import com.sxmd.database.bean.ColumnEntity;
 import com.sxmd.database.bean.TableEntity;
+import com.sxmd.exception.SxmdException;
 import com.sxmd.help.SqlToJavaHelp;
 import com.sxmd.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +37,9 @@ public class GeneratorServiceImpl implements GeneratorService{
     @Autowired
     private PostgreGeneratorDao postgreDao;
 
-    private final static String DATABASE_POSTGRESQL = "postgresql";
-    private final static String DATABASE_MYSQL = "mysql";
-    private final static String FILE_SUFFIX = ".java";
+    private static final String DATABASE_POSTGRESQL = "postgresql";
+    private static final String DATABASE_MYSQL = "mysql";
+    private static final String FILE_SUFFIX = ".java";
 
     /**
      * Description:   查询列表
@@ -114,11 +115,11 @@ public class GeneratorServiceImpl implements GeneratorService{
         File file = new File(filePath);
         if(file.exists()){
             if(!file.isDirectory()){
-                throw new RuntimeException("文件路径只能为文件夹");
+                throw new SxmdException("文件路径只能为文件夹");
             }
         }else {
             if(!file.mkdirs()){
-                throw new RuntimeException("文件夹创建失败");
+                throw new SxmdException("文件夹创建失败");
             }
         }
         // 如果输入的表名称不是空的，把表的字段进入
@@ -128,8 +129,8 @@ public class GeneratorServiceImpl implements GeneratorService{
             map.put("table",table);
             map.put("columns",columns);
             // 对文件进行处理（替换标识符的内容）
-            fileName = MessageFormat.format(ftlEntity.getCreateFileName(), new Object[]{table.getTableNameToJavaName()});
-            map.put("fileName",fileName.substring(0,fileName.lastIndexOf(".")));
+            fileName = MessageFormat.format(ftlEntity.getCreateFileName(), table.getTableNameToJavaName());
+            map.put("fileName",fileName.substring(0,fileName.lastIndexOf('.')));
         }
         FreemarkerConfig.generatorFile(templateName,filePath + fileName,map);
     }

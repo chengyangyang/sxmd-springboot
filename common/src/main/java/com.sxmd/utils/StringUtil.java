@@ -1,5 +1,7 @@
 package com.sxmd.utils;
 
+import com.sxmd.exception.SxmdException;
+
 /**
  * Description: 字符串处理
  *
@@ -8,6 +10,10 @@ package com.sxmd.utils;
  * Version 1.0
  */
 public class StringUtil extends org.apache.commons.lang3.StringUtils {
+
+    public StringUtil() {
+        throw new SxmdException("工具类不能进行实例化");
+    }
 
     /**
      * Description:   驼峰式转化为下划线字符
@@ -78,7 +84,6 @@ public class StringUtil extends org.apache.commons.lang3.StringUtils {
                     return false;
                 }
             }
-
             return true;
         } else {
             return true;

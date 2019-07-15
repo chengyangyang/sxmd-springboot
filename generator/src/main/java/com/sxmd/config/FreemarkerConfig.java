@@ -1,5 +1,6 @@
 package com.sxmd.config;
 
+import com.sxmd.exception.SxmdException;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -21,6 +22,11 @@ public class FreemarkerConfig {
     private static Logger log = LoggerFactory.getLogger(FreemarkerConfig.class);
 
     private static Configuration cfg;
+
+
+    private FreemarkerConfig() {
+        throw new SxmdException("配置模板工具不能进行实例化");
+    }
 
     public static Configuration getConfiguration(){
         if(null == cfg){
@@ -48,10 +54,8 @@ public class FreemarkerConfig {
             template.process(map,out);
             log.debug("文件生成路径---->"+filePath);
             out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TemplateException e) {
-            e.printStackTrace();
+        } catch (IOException | TemplateException e) {
+            log.error("context",e);
         }
     }
 

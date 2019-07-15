@@ -3,14 +3,14 @@
 # mysql 设置
 spring:
   datasource:
-    #driver-class-name: com.mysql.jdbc.Driver
-    #url: jdbc:mysql://localhost:3306/sxmd_springboot?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=UTC
-    #username: root
-    #password: admin
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://172.21.32.62:5432/equipment_diagnosis
-    username: admin
-    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sxmd_springboot?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=UTC
+    username: root
+    password: admin
+    #driver-class-name: org.postgresql.Driver
+    #url: jdbc:postgresql://172.21.32.62:5432/equipment_diagnosis
+    #username: admin
+    #password: 123456
 
 
 

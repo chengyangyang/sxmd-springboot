@@ -2,6 +2,8 @@ package com.sxmd.database.controller;
 
 import com.sxmd.database.FtlService;
 import com.sxmd.database.service.GeneratorService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,8 @@ public class DataController {
     private GeneratorService service;
     @Autowired
     private FtlService ftlService;
+
+    private static final Logger log = LoggerFactory.getLogger(DataController.class);
 
     /**
      * Description:   查询所有数据库表
@@ -53,7 +57,7 @@ public class DataController {
             ftlService.generatorEntity(tableNameValue);
             mv.addObject("message","代码生成成功!");
         }catch (Exception e){
-            e.printStackTrace();
+            log.error("context",e);
             mv.addObject("message","代码生成失败!");
         }
         return mv;

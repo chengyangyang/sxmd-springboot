@@ -1,5 +1,6 @@
 package com.sxmd.help;
 
+import com.sxmd.exception.SxmdException;
 import com.sxmd.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +44,10 @@ public class SqlToJavaHelp {
         list.add("co");
     }
 
+    private SqlToJavaHelp(){
+        throw new SxmdException("工具类不能被实例化");
+    }
+
     /**
      * Description:   实体列的类型转化
      * @author cy
@@ -79,7 +84,7 @@ public class SqlToJavaHelp {
      */
     public static String classNameByTable(String tableName){
         // 截取第一个下划线前面的部分
-        String substring = tableName.substring(tableName.indexOf("_"), tableName.length());
+        String substring = tableName.substring(tableName.indexOf('_'), tableName.length());
         // 驼峰式转化 并首字母大写
         String capitalize = StringUtil.capitalize(substring);
         return StringUtil.camelCaseName(capitalize);

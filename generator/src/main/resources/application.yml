@@ -34,6 +34,6 @@ mybatis:
 # 支持 postgresql /mysql/
 
 sxmd:
-  basedate: postgresql
+  basedate: mysql
 
 

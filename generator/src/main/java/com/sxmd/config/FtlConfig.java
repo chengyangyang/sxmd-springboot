@@ -1,6 +1,7 @@
 package com.sxmd.config;
 
 import com.sxmd.database.bean.FtlEntity;
+import com.sxmd.exception.SxmdException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,10 +32,15 @@ public class FtlConfig {
         map.put("hollysys/xml.ftl",new FtlEntity("hollysys/xml.ftl","E:\\","{0}Mapper.java"));
     }
 
+
+    private FtlConfig() {
+        throw new SxmdException("配置工具不能进行实例化");
+    }
+
     public static FtlEntity getFtlEntity(String templateName){
         Object obj = map.get(templateName);
         if(Objects.isNull(obj)){
-            throw new RuntimeException("没有对应的模板");
+            throw new SxmdException("没有对应的模板");
         }
         return (FtlEntity)obj;
     }

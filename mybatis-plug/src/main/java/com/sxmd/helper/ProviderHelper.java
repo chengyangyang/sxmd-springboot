@@ -18,6 +18,10 @@ import java.util.Objects;
  */
 public class ProviderHelper {
 
+    private ProviderHelper(){
+        throw new SxmdException("工具类不能被实例化");
+    }
+
     /**
      * Description:   判断是否为空 为空抛出异常
      * @author cy

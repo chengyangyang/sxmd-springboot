@@ -7,8 +7,11 @@ import com.sxmd.mybatistest.service.MyTestService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -22,8 +25,10 @@ import java.util.*;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 public class MyTest {
 
+    private static final Logger log = LoggerFactory.getLogger(MyTest.class);
 
     @Resource
     private MyTestService mytest;
@@ -37,7 +42,7 @@ public class MyTest {
         myTest.setAge("2");
         myTest.setComInfo("q");
         MyTestEntity o = this.mytest.getMytest(myTest);
-        System.out.println("结果：id="+ o.getId()+"   "+ o.toString());
+        log.debug("结果：id="+ o.getId()+"   "+ o.toString());
         Assert.assertNotNull(o);
     }
 
@@ -57,8 +62,8 @@ public class MyTest {
 
     @Test
     public void mytestById(){
-        MyTestEntity myTestEntity = myTestDao.selectByPrimaryKey("1");
-        Assert.assertNotNull(myTestEntity);
+        MyTestEntity myTestEntity = myTestDao.selectByPrimaryKey("1221");
+        Assert.assertNull(myTestEntity);
     }
 
     @Test

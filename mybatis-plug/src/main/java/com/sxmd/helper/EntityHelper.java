@@ -2,6 +2,9 @@ package com.sxmd.helper;
 
 import com.sxmd.bean.EntityTable;
 import com.sxmd.exception.SxmdException;
+import com.sxmd.utils.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 
@@ -21,11 +24,18 @@ import java.util.stream.Collectors;
  */
 public class EntityHelper {
 
+    private static final Logger log =  LoggerFactory.getLogger(EntityHelper.class);
+
+    private static final  String PREFIX =  "无法获取实体类";
 
     /**
      * 存储所有的entity信息
      */
     private static final Map<Class<?>, EntityTable> ENTITY_TABLE_MAP = new ConcurrentHashMap();
+
+    private EntityHelper(){
+        throw new SxmdException("工具类不能被实例化");
+    }
 
     /**
      * Description:   获取实体表名称
@@ -36,8 +46,8 @@ public class EntityHelper {
      */
     public static String getEntityTableName(Class<?> entityClass) {
         String tableSqlName = getColumnNameList(entityClass).getTableSqlName();
-        if (StringHelper.isBlank(tableSqlName)) {
-            throw new SxmdException("无法获取实体类" + entityClass.getCanonicalName() + "对应的表名!");
+        if (StringUtil.isBlank(tableSqlName)) {
+            throw new SxmdException(PREFIX + entityClass.getCanonicalName() + "对应的表名!");
         } else {
             return tableSqlName;
         }
@@ -52,8 +62,8 @@ public class EntityHelper {
      */
     public static String getPkIdName(Class<?> entityClass) {
         String pkIdName = getColumnNameList(entityClass).getPkIdName();
-        if (StringHelper.isBlank(pkIdName)) {
-            throw new SxmdException("无法获取实体类" + entityClass.getCanonicalName() + "对应的主键名称!");
+        if (StringUtil.isBlank(pkIdName)) {
+            throw new SxmdException(PREFIX + entityClass.getCanonicalName() + "对应的主键名称!");
         } else {
             return pkIdName;
         }
@@ -68,8 +78,8 @@ public class EntityHelper {
      */
     public static String getPkIdSqlName(Class<?> entityClass) {
         String pkIdSqlName = getColumnNameList(entityClass).getPkIdSqlName();
-        if (StringHelper.isBlank(pkIdSqlName)) {
-            throw new SxmdException("无法获取实体类" + entityClass.getCanonicalName() + "对应的主键sql名称!");
+        if (StringUtil.isBlank(pkIdSqlName)) {
+            throw new SxmdException(PREFIX + entityClass.getCanonicalName() + "对应的主键sql名称!");
         } else {
             return pkIdSqlName;
         }
@@ -85,7 +95,7 @@ public class EntityHelper {
     public static EntityTable getColumnNameList(Class<?> entityClass) {
         EntityTable entityTable = ENTITY_TABLE_MAP.get(entityClass);
         if (entityTable == null) {
-            throw new SxmdException("无法获取实体类" + entityClass.getCanonicalName() + "对应的数据库类型!");
+            throw new SxmdException(PREFIX + entityClass.getCanonicalName() + "对应的数据库类型!");
         } else {
             return entityTable;
         }
@@ -98,7 +108,7 @@ public class EntityHelper {
      * @return java.util.LinkedHashMap<java.lang.String,java.lang.String>
      * @date  2019/6/25 10:58
      */
-    public static LinkedHashMap<String, String> getColumnExcludePkIdList(Class<?> entityClass) {
+    public static Map<String, String> getColumnExcludePkIdList(Class<?> entityClass) {
          return getColumnNameList(entityClass).getColumnExcludePkId();
     }
 
@@ -121,7 +131,7 @@ public class EntityHelper {
                             .setTableSqlName(setTableSqlName(aClass))
                             .setColumnExcludePkId(setColumnExcludePkId(aClass))
                             .setPkIdName(setPkIdName(aClass))
-                            .setPkIdSqlName(StringHelper.underscoreName(setPkIdName(aClass)))
+                            .setPkIdSqlName(StringUtil.underscoreName(setPkIdName(aClass)))
                     );
             // 存储sql 的拼接
             SqlHelper.setSqlColumns(aClass);
@@ -139,13 +149,13 @@ public class EntityHelper {
      * @date  2019/6/20 18:12
      */
     public static String setPkIdName(Class<?> aClass){
-        Field field = getAllFieldsList(aClass).stream()
+        Optional<Field> result = getAllFieldsList(aClass).stream()
                 .filter(x -> x.isAnnotationPresent(Id.class))
-                .findFirst().get();
-        if(Objects.isNull(field)){
-            return "id";
+                .findFirst();
+        if(result.isPresent()){
+            return result.get().getName();
         }else {
-            return field.getName();
+            return "id";
         }
     }
 
@@ -156,13 +166,13 @@ public class EntityHelper {
      * @return
      * @date  2019/6/20 18:14
      */
-    public static LinkedHashMap<String,String> setColumnExcludePkId(Class<?> aClass){
-        LinkedHashMap<String,String> columnsName = new LinkedHashMap<>();
+    public static Map<String,String> setColumnExcludePkId(Class<?> aClass){
+        Map<String,String> columnsName = new LinkedHashMap<>();
         List<Field> fields = getAllFieldsList(aClass);
         for (int i = 0; i < fields.size(); i++) {
             Field field = fields.get(i);
             if(!field.isAnnotationPresent(Id.class)){
-                columnsName.put(field.getName(),StringHelper.underscoreName(field.getName()));
+                columnsName.put(field.getName(),StringUtil.underscoreName(field.getName()));
             }
         }
         return columnsName;
@@ -178,7 +188,7 @@ public class EntityHelper {
     public static String setTableSqlName(Class<?> aClass){
         String tableName = aClass.getAnnotation(Table.class).name();
         if(StringUtils.isEmpty(tableName)){
-            tableName = StringHelper.underscoreName(aClass.getSimpleName());
+            tableName = StringUtil.underscoreName(aClass.getSimpleName());
         }
         return tableName;
     }
@@ -191,7 +201,7 @@ public class EntityHelper {
      * @date  2019/6/21 9:58
      */
     public static List<Field> getAllFieldsList(final Class<?> cls) {
-        final List<Field> allFields = new ArrayList<Field>();
+        final List<Field> allFields = new ArrayList<>();
         Class<?> currentClass = cls;
         while (currentClass != null) {
             final Field[] declaredFields = currentClass.getDeclaredFields();
@@ -216,7 +226,7 @@ public class EntityHelper {
             try {
                 return !Objects.isNull(x.get(obj)) || !x.isAnnotationPresent(Id.class);
             } catch (IllegalAccessException e) {
-                e.printStackTrace();
+                log.error("context",e);
                 return false;
             }
         }).collect(Collectors.toList());

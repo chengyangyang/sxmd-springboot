@@ -5,6 +5,7 @@ import lombok.experimental.Accessors;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -33,6 +34,6 @@ public class EntityTable {
     /**
      * 列名称集合（key 是字段名称   value 是数据库字段数据）
      */
-    private LinkedHashMap<String,String> columnExcludePkId;
+    private Map<String,String> columnExcludePkId;
 
 }

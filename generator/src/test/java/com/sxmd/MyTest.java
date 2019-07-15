@@ -1,7 +1,8 @@
 package com.sxmd;
 
+import com.sxmd.config.FreemarkerConfig;
 import com.sxmd.database.FtlService;
-import com.sxmd.database.service.GeneratorService;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,6 @@ public class MyTest {
 
     @Test
     public void gen(){
-        service.generatorEntity("vibration_sensor_param_config");
+        service.generatorEntity("my_test");
     }
 }

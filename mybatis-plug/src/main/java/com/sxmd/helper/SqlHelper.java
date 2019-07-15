@@ -1,6 +1,8 @@
 package com.sxmd.helper;
 
 
+import com.sxmd.exception.SxmdException;
+
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
 import java.util.*;
@@ -30,6 +32,11 @@ public class SqlHelper {
      */
     private static final Map<Class<?>, String> SQL_INSERT_COLUMNS_NOT_ID_MAP = new ConcurrentHashMap();
 
+
+    private SqlHelper(){
+        throw new SxmdException("工具类不能被实例化");
+    }
+
     /**
      * Description:   获取所有的列(用逗号隔开 含有主键)
      * @author cy
@@ -50,7 +57,7 @@ public class SqlHelper {
      */
     public static void setSqlColumns(final Class<?> aClass){
         StringBuilder sqlColums = new StringBuilder();
-        LinkedHashMap<String, String> column = EntityHelper.getColumnExcludePkIdList(aClass);
+        Map<String, String> column = EntityHelper.getColumnExcludePkIdList(aClass);
         for (Map.Entry<String, String> co: column.entrySet()) {
             sqlColums.append(co.getValue() + ",");
         }
@@ -104,11 +111,11 @@ public class SqlHelper {
             return "";
         }
         List<Field> fields = EntityHelper.getHasValueFieldsList(obj);
-        if(Objects.isNull(fields) || fields.size() <= 0){
+        if(Objects.isNull(fields) || fields.isEmpty()){
             return "";
         }
         // 得到对应的列
-        LinkedHashMap<String, String> columnExcludePkId = EntityHelper.getColumnExcludePkIdList(obj.getClass());
+        Map<String, String> columnExcludePkId = EntityHelper.getColumnExcludePkIdList(obj.getClass());
 
         StringBuilder sql = new StringBuilder();
         sql.append(" where ");
@@ -157,7 +164,7 @@ public class SqlHelper {
     public static void setSqlInsertColumns(Class<?> aClass) {
         StringBuilder sqlColums = new StringBuilder();
         StringBuilder valueColums = new StringBuilder();
-        LinkedHashMap<String, String> column = EntityHelper.getColumnExcludePkIdList(aClass);
+        Map<String, String> column = EntityHelper.getColumnExcludePkIdList(aClass);
         for (Map.Entry<String, String> co: column.entrySet()) {
             valueColums.append("#{");
             valueColums.append(co.getKey());
@@ -181,7 +188,7 @@ public class SqlHelper {
     public static void setSqlInsertNotIdColumns(Class<?> aClass) {
         StringBuilder sqlColums = new StringBuilder();
         StringBuilder valueColums = new StringBuilder();
-        LinkedHashMap<String, String> column = EntityHelper.getColumnExcludePkIdList(aClass);
+        Map<String, String> column = EntityHelper.getColumnExcludePkIdList(aClass);
         for (Map.Entry<String, String> co: column.entrySet()) {
             valueColums.append("#{");
             valueColums.append(co.getKey());
@@ -205,7 +212,7 @@ public class SqlHelper {
     public static String getSqlInsertAllColumns(List<Object> list,Class<?> aClass, boolean isHasId) {
         StringBuilder sqlColums = new StringBuilder();
         StringBuilder valueColums = new StringBuilder();
-        LinkedHashMap<String, String> column = EntityHelper.getColumnExcludePkIdList(aClass);
+        Map<String, String> column = EntityHelper.getColumnExcludePkIdList(aClass);
         for (Map.Entry<String, String> co: column.entrySet()) {
             valueColums.append("#'{'list[{0}].");
             valueColums.append(co.getKey());
@@ -246,10 +253,10 @@ public class SqlHelper {
      */
     public static String getSqlUpdateColumns(Class<?> aClass) {
         StringBuilder sqlColums = new StringBuilder();
-        LinkedHashMap<String, String> column = EntityHelper.getColumnExcludePkIdList(aClass);
+        Map<String, String> column = EntityHelper.getColumnExcludePkIdList(aClass);
         for (Map.Entry<String, String> co: column.entrySet()) {
-            sqlColums.append(co.getKey() + " = #{");
-            sqlColums.append(co.getValue());
+            sqlColums.append(co.getValue() + " = #{");
+            sqlColums.append(co.getKey());
             sqlColums.append("},");
         }
         return sqlColums.substring(0,sqlColums.length() - 1);
@@ -264,9 +271,7 @@ public class SqlHelper {
      */
     public static String getSqlDeleteIds(List list) {
         StringBuilder sql = new StringBuilder();
-        list.forEach(x->{
-            sql.append(x + ",");
-        });
+        list.forEach(x-> sql.append(x + ","));
         return sql.substring(0,sql.length() - 1);
     }
 }
