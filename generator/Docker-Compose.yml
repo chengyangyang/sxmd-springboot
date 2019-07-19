@@ -1,0 +1,10 @@
+
+
+version: '3'
+services:
+  web:
+    environment:
+      - JAR_FILE=target/someProject-app.jar
+    build: ./
+    ports:
+      - "8188:8188"
