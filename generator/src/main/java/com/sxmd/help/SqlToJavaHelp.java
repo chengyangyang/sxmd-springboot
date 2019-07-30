@@ -2,6 +2,8 @@ package com.sxmd.help;
 
 import com.sxmd.exception.SxmdException;
 import com.sxmd.utils.StringUtil;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,15 +13,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Description:
+ * Description: sql 转化java
  *
  * @author cy
  * @date 2019年06月26日 15:59
  * Version 1.0
  */
+@Slf4j
 public class SqlToJavaHelp {
-
-    private static final Logger log = LoggerFactory.getLogger(SqlToJavaHelp.class);
 
     private static Map map = new HashMap<String,String>();
 

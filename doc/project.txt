@@ -6,7 +6,15 @@
 一. 项目架构  文档的整理
 
 1.common java的公用模块
-2.generator  代码生成模板
+2.generator  代码生成模板（一个接口一个model）
+    生成模板包括： (总共生成五个model)
+        实体 model
+        列表 返回类型model  条件使用的是 map所以不需要model
+        详情 返回类型model  使用id 进行查询
+        编辑 参数是model
+        新增 参数是model
+        删除 根据 id 删除
+
 3.mybatis-plug  对mybatis 进行封装  单表的增删查改  和spring进行了整合
 4.如果使用liunx 注意代码中的文件路径问题需要进行改动 为了方便使用的是windows下的方式
 
