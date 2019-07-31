@@ -1,5 +1,6 @@
 package com.sxmd.utils;
 
+import com.sxmd.exception.SxmdException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
@@ -20,66 +21,126 @@ public class ZipUtil {
     }
 
     /**
-     * 将存放在sourceFilePath目录下的源文件，打包成fileName名称的zip文件，并存放到zipFilePath路径下
-     *
-     * @param sourceFilePath :待压缩的文件路径
-     * @param zipFilePath    :压缩后存放路径
-     * @param fileName       :压缩后文件的名称
-     * @return
+     * 创建ZIP文件
+     * @param sourcePath 文件或文件夹路径
+     * @param zipPath 生成的zip文件存在路径（包括文件名）
+     * @param isDrop  是否删除原文件:true删除、false不删除
      */
-    public static boolean fileToZip(String sourceFilePath, String zipFilePath, String fileName) {
-        boolean flag = false;
-        File sourceFile = new File(sourceFilePath);
-        FileInputStream fis = null;
-        BufferedInputStream bis = null;
+    public static boolean createZip(String sourcePath, String zipPath,Boolean isDrop) {
+        boolean flag = true;
         FileOutputStream fos = null;
         ZipOutputStream zos = null;
-
-        if (sourceFile.exists() == false) {
-            log.debug("待压缩的文件目录：" + sourceFilePath + "不存在.");
-            sourceFile.mkdir(); // 新建目录
-        }
         try {
-            File zipFile = new File(zipFilePath + "/" + fileName + ".zip");
-            if (zipFile.exists()) {
-                log.debug(zipFilePath + "目录下存在名字为:" + fileName + ".zip" + "打包文件.");
-            } else {
-                File[] sourceFiles = sourceFile.listFiles();
-                if (null == sourceFiles || sourceFiles.length < 1) {
-                    log.debug("待压缩的文件目录：" + sourceFilePath + "里面不存在文件，无需压缩.");
-                } else {
-                    fos = new FileOutputStream(zipFile);
-                    zos = new ZipOutputStream(new BufferedOutputStream(fos));
-                    byte[] bufs = new byte[1024 * 10];
-                    for (int i = 0; i < sourceFiles.length; i++) {
-                        //创建ZIP实体，并添加进压缩包
-                        ZipEntry zipEntry = new ZipEntry(sourceFiles[i].getName());
-                        zos.putNextEntry(zipEntry);
-                        //读取待压缩的文件并写进压缩包里
-                        fis = new FileInputStream(sourceFiles[i]);
-                        bis = new BufferedInputStream(fis, 1024 * 10);
-                        int read = 0;
-                        while ((read = bis.read(bufs, 0, 1024 * 10)) != -1) {
-                            zos.write(bufs, 0, read);
-                        }
-                    }
-                    flag = true;
-                }
-            }
-        } catch (IOException e) {
-            log.error("文件流出现异常",e);
+            fos = new FileOutputStream(zipPath);
+            zos = new ZipOutputStream(fos);
+            writeZip(new File(sourcePath), "", zos,isDrop);
+        } catch (Exception e) {
             flag = false;
+            log.error("创建ZIP文件失败",e);
         } finally {
-            //关闭流
             try {
-                if (null != bis) bis.close();
-                if (null != zos) zos.close();
+                if (zos != null) {
+                    zos.close();
+                }
             } catch (IOException e) {
-                log.error("关闭流出现异常",e);
-                flag = true;
+                log.error("流关闭失败",e);
             }
+
         }
         return flag;
+    }
+    /**
+     * 清空文件和文件目录
+     *
+     * @param f
+     */
+    public static void clean(File f)  {
+        String[] cs = f.list();
+        if (cs == null || cs.length <= 0) {
+            log.debug("delFile:[ " + f + " ]");
+            boolean isDelete = f.delete();
+            if (!isDelete) {
+                log.error("delFile:[ " + f.getName() + "文件删除失败！" + " ]");
+                throw new SxmdException(f.getName() + "文件删除失败！");
+            }
+        } else {
+            for (int i = 0; i < cs.length; i++) {
+                String cn = cs[i];
+                String cp = f.getPath() + File.separator + cn;
+                File f2 = new File(cp);
+                if (f2.exists() && f2.isFile()) {
+                    log.error("delFile:[ " + f2 + " ]");
+                    boolean isDelete = f2.delete();
+                    if (!isDelete) {
+                        System.out.println("delFile:[ " + f2.getName() + "文件删除失败！" + " ]");
+                        throw new SxmdException(f2.getName() + "文件删除失败！");
+                    }
+                } else if (f2.exists() && f2.isDirectory()) {
+                    clean(f2);
+                }
+            }
+            System.out.println("delFile:[ " + f + " ]");
+            boolean isDelete = f.delete();
+            if (!isDelete) {
+                System.out.println("delFile:[ " + f.getName() + "文件删除失败！" + " ]");
+                throw new SxmdException(f.getName() + "文件删除失败！");
+            }
+        }
+    }
+    private static void writeZip(File file, String parentPath, ZipOutputStream zos,Boolean isDrop) {
+        if(file.exists()){
+            // 处理文件夹
+            if(file.isDirectory()){
+                parentPath+=file.getName()+File.separator;
+                File [] files=file.listFiles();
+                if(files.length != 0)
+                {
+                    for(File f:files){
+                        writeZip(f, parentPath, zos,isDrop);
+                    }
+                }
+                else
+                {       //空目录则创建当前目录
+                    try {
+                        zos.putNextEntry(new ZipEntry(parentPath));
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }else{
+                FileInputStream fis=null;
+                try {
+                    fis=new FileInputStream(file);
+                    ZipEntry ze = new ZipEntry(parentPath + file.getName());
+                    zos.putNextEntry(ze);
+                    byte [] content=new byte[1024];
+                    int len;
+                    while((len=fis.read(content))!=-1){
+                        zos.write(content,0,len);
+                        zos.flush();
+                    }
+
+                } catch (FileNotFoundException e) {
+                    log.error("创建ZIP文件失败",e);
+                } catch (IOException e) {
+                    log.error("创建ZIP文件失败",e);
+                }finally{
+                    try {
+                        if(fis!=null){
+                            fis.close();
+                        }
+                        if(isDrop){
+                            clean(file);
+                        }
+                    }catch(IOException e){
+                        log.error("创建ZIP文件失败",e);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 
 }

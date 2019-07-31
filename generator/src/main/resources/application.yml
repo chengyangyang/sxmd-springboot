@@ -31,5 +31,7 @@ mybatis:
 
 sxmd:
   basedate: mysql
+  zip-download-folder-name: mytest  # 就相当于表名称
+
 
 

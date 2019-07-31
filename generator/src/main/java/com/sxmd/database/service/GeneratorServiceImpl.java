@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.List;
@@ -32,9 +33,9 @@ public class GeneratorServiceImpl implements GeneratorService{
 
     @Value("${sxmd.basedate}")
     private String database;
-    @Autowired
+    @Resource
     private MysqlGeneratorDao mysqlDao;
-    @Autowired
+    @Resource
     private PostgreGeneratorDao postgreDao;
 
     private static final String DATABASE_POSTGRESQL = "postgresql";

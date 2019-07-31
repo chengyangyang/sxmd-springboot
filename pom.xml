@@ -22,6 +22,7 @@
         <module>generator</module>
         <module>common</module>
         <module>mybatis-plug</module>
+        <module>my-project</module>
     </modules>
 
 

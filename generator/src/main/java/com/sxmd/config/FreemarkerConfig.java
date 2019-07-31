@@ -4,6 +4,7 @@ import com.sxmd.exception.SxmdException;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,9 +18,8 @@ import java.util.Map;
  * @date 2019年06月26日 13:18
  * Version 1.0
  */
+@Slf4j
 public class FreemarkerConfig {
-
-    private static Logger log = LoggerFactory.getLogger(FreemarkerConfig.class);
 
     private static Configuration cfg;
 
