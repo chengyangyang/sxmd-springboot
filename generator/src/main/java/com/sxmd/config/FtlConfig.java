@@ -5,6 +5,7 @@ import com.sxmd.exception.SxmdException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,12 +21,6 @@ public class FtlConfig {
 
     private static Map map = new HashMap<String, FtlEntity>();
 
-    /**
-     * 基本的文件夹路径  E:\\
-     */
-    private static String BASE_PATH = "/file/generator";
-
-
 
     private FtlConfig() {
         throw new SxmdException("配置工具不能进行实例化");
@@ -33,24 +28,26 @@ public class FtlConfig {
 
 
     /**
-     * Description:   项目启动后初始化数据
+     * Description:   项目启动后初始化数据 这里面文件下载后会进行删除
      * @author cy
-     * @param zipFolderName:
+     * @param zipFolderName: zip 包里面的文件夹名称
      * @return void
      * @date  2019/7/31 19:39
      */
-    public static void initDate(String zipFolderName){
-        map.put("hollysys/entity.ftl",new FtlEntity("hollysys/entity.ftl",BASE_PATH,"{0}.java"));
-        map.put("hollysys/AddModel.ftl",new FtlEntity("hollysys/AddModel.ftl",BASE_PATH,"{0}AddModel.java"));
-        map.put("hollysys/EditModel.ftl",new FtlEntity("hollysys/EditModel.ftl",BASE_PATH,"{0}EditModel.java"));
-        map.put("hollysys/ListModel.ftl",new FtlEntity("hollysys/ListModel.ftl",BASE_PATH,"{0}ListModel.java"));
-        map.put("hollysys/Model.ftl",new FtlEntity("hollysys/Model.ftl",BASE_PATH,"{0}Model.java"));
+    public static void initZipDate(String zipFolderName){
+        String path = FtlConfig.class.getResource("/").getPath();
+        path = path + File.separator + zipFolderName + File.separator;
+        map.put("sxmd/Entity.ftl",new FtlEntity("sxmd/Entity.ftl",path + "entity","{0}.java"));
+        map.put("sxmd/AddModel.ftl",new FtlEntity("sxmd/AddModel.ftl",path +"model" + File.separator + "am","{0}AddModel.java"));
+        map.put("sxmd/EditModel.ftl",new FtlEntity("sxmd/EditModel.ftl",path +"model" + File.separator + "em","{0}EditModel.java"));
+        map.put("sxmd/ListModel.ftl",new FtlEntity("sxmd/ListModel.ftl",path +"model" + File.separator + "lm","{0}ListModel.java"));
+        map.put("sxmd/InfoModel.ftl",new FtlEntity("sxmd/InfoModel.ftl",path +"model" + File.separator + "dm","{0}Model.java"));
 
-        map.put("hollysys/dao.ftl",new FtlEntity("hollysys/dao.ftl",BASE_PATH,"{0}Dao.java"));
-        map.put("hollysys/controller.ftl",new FtlEntity("hollysys/controller.ftl",BASE_PATH,"{0}Controller.java"));
-        map.put("hollysys/service.ftl",new FtlEntity("hollysys/service.ftl",BASE_PATH,"{0}Service.java"));
-        map.put("hollysys/serviceimpl.ftl",new FtlEntity("hollysys/serviceimpl.ftl",BASE_PATH,"{0}ServiceImpl.java"));
-        map.put("hollysys/xml.ftl",new FtlEntity("hollysys/xml.ftl",BASE_PATH,"{0}Mapper.java"));
+        map.put("sxmd/Dao.ftl",new FtlEntity("sxmd/Dao.ftl",path + "dao","{0}Dao.java"));
+        map.put("sxmd/Controller.ftl",new FtlEntity("sxmd/Controller.ftl",path + "controller","{0}Controller.java"));
+        map.put("sxmd/Service.ftl",new FtlEntity("sxmd/Service.ftl",path + "service","{0}Service.java"));
+        map.put("sxmd/Serviceimpl.ftl",new FtlEntity("sxmd/Serviceimpl.ftl",path + "service","{0}ServiceImpl.java"));
+        map.put("sxmd/Xml.ftl",new FtlEntity("sxmd/Xml.ftl",path + "xml","{0}Mapper.java"));
     }
 
     public static FtlEntity getFtlEntity(String templateName){

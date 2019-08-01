@@ -23,6 +23,7 @@
                 controller  控制器
                 entity      实体类
                 service     接口和实现类
+                dao         数据库连接层
                 model       实体模型
                     am      添加数据model
                     dm      详情数据model

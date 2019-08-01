@@ -22,17 +22,17 @@ public class FtlService {
 
     public void generatorEntity(String tableName){
         HashMap<String, Object> map = new HashMap<>(10);
-        generatorService.generatorJavaFile(true,tableName,"hollysys/AddModel.ftl",map);
-        generatorService.generatorJavaFile(true,tableName,"hollysys/EditModel.ftl",map);
-        generatorService.generatorJavaFile(true,tableName,"hollysys/ListModel.ftl",map);
-        generatorService.generatorJavaFile(true,tableName,"hollysys/Model.ftl",map);
-        generatorService.generatorJavaFile(true,tableName,"hollysys/entity.ftl",map);
+        generatorService.generatorJavaFile(true,tableName,"sxmd/AddModel.ftl",map);
+        generatorService.generatorJavaFile(true,tableName,"sxmd/EditModel.ftl",map);
+        generatorService.generatorJavaFile(true,tableName,"sxmd/ListModel.ftl",map);
+        generatorService.generatorJavaFile(true,tableName,"sxmd/InfoModel.ftl",map);
+        generatorService.generatorJavaFile(true,tableName,"sxmd/Entity.ftl",map);
 
-        generatorService.generatorJavaFile(true,tableName,"hollysys/dao.ftl",map);
-        generatorService.generatorJavaFile(true,tableName,"hollysys/controller.ftl",map);
-        generatorService.generatorJavaFile(true,tableName,"hollysys/service.ftl",map);
-        generatorService.generatorJavaFile(true,tableName,"hollysys/serviceimpl.ftl",map);
-        generatorService.generatorJavaFile(true,tableName,"hollysys/xml.ftl",map);
+        generatorService.generatorJavaFile(true,tableName,"sxmd/Dao.ftl",map);
+        generatorService.generatorJavaFile(true,tableName,"sxmd/Controller.ftl",map);
+        generatorService.generatorJavaFile(true,tableName,"sxmd/Service.ftl",map);
+        generatorService.generatorJavaFile(true,tableName,"sxmd/Serviceimpl.ftl",map);
+        generatorService.generatorJavaFile(true,tableName,"sxmd/Xml.ftl",map);
 
     }
 

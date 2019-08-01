@@ -22,7 +22,7 @@ public class SpringAfterDate implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        FtlConfig.initDate(FOLDER_NAME);
+        FtlConfig.initZipDate(FOLDER_NAME);
         log.debug("=============项目启动完成=============");
     }
 }
