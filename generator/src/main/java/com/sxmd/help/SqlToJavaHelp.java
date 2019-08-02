@@ -85,9 +85,11 @@ public class SqlToJavaHelp {
      */
     public static String classNameByTable(String tableName){
         // 截取第一个下划线前面的部分
-        String substring = tableName.substring(tableName.indexOf('_'), tableName.length());
+        if(tableName.contains("_")){
+            tableName = tableName.substring(tableName.indexOf('_'), tableName.length());
+        }
         // 驼峰式转化 并首字母大写
-        String capitalize = StringUtil.capitalize(substring);
+        String capitalize = StringUtil.capitalize(tableName);
         return StringUtil.camelCaseName(capitalize);
     }
 

@@ -133,7 +133,7 @@ public class GeneratorServiceImpl implements GeneratorService{
             fileName = MessageFormat.format(ftlEntity.getCreateFileName(), table.getTableNameToJavaName());
             map.put("fileName",fileName.substring(0,fileName.lastIndexOf('.')));
         }
-        FreemarkerConfig.generatorFile(templateName,filePath + fileName,map);
+        FreemarkerConfig.generatorFile(templateName,filePath + File.separator + fileName,map);
     }
 
     /**

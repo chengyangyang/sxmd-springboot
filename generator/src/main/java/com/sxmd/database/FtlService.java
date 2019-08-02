@@ -20,6 +20,13 @@ public class FtlService {
     private GeneratorService generatorService;
 
 
+    /**
+     * Description: zip 需要生成的模板
+     * @author cy
+     * @param tableName:
+     * @return void
+     * @date  2019/8/2 16:05
+     */
     public void generatorEntity(String tableName){
         HashMap<String, Object> map = new HashMap<>(10);
         generatorService.generatorJavaFile(true,tableName,"sxmd/AddModel.ftl",map);

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="./../static/images/125.ico" mce_href="./../static/images/125.ico" type="image/x-icon">
     <title>代码生成</title>
 </head>
 <style>
@@ -68,7 +69,7 @@
 
             <form action="/generate" style="text-align: center;margin-bottom: 50px">
                 <input id="tableNameValue" type="hidden" name="tableNameValue" >
-                <input style="background-color: skyblue;width: 100px; margin-top: 30px;" type="submit" value="提 交" onclick="btn()">
+                <input style="background-color: skyblue;width: 100px; margin-top: 30px;" type="submit" value="提 交" onclick="return btn()">
             </form>
         </div>
     </div>
@@ -85,8 +86,10 @@
         }
         if(tableNameValue == "undefined" || tableNameValue == null){
             alert("请选择一个表！");
+            return false;
         }
         document.getElementById("tableNameValue").value = tableNameValue;
+        return true;
     }
 
 </script>

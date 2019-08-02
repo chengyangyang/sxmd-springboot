@@ -6,6 +6,9 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Description: 在spring 启动后执行的数据
  *
@@ -18,11 +21,20 @@ import org.springframework.stereotype.Component;
 public class SpringAfterDate implements ApplicationRunner {
 
     @Value("${sxmd.zip-download-folder-name}")
-    private String FOLDER_NAME;
+    private String folderName;
+
+    @Value("#{${sxmd.sql-type-to-java-type}}")
+    private Map<String,String> map;
+
+    @Value("#{'${sxmd.filter-entity}'.split(',')}")
+    private List list;
+
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        FtlConfig.initZipDate(FOLDER_NAME);
+        Map<String, String> map = this.map;
+        List list = this.list;
+        FtlConfig.initZipDate(folderName);
         log.debug("=============项目启动完成=============");
     }
 }

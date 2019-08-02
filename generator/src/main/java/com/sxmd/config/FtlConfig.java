@@ -20,6 +20,7 @@ import java.util.Objects;
 public class FtlConfig {
 
     private static Map map = new HashMap<String, FtlEntity>();
+    public static String DOWNLOAD_ZIP_PATH = "";
 
 
     private FtlConfig() {
@@ -37,6 +38,7 @@ public class FtlConfig {
     public static void initZipDate(String zipFolderName){
         String path = FtlConfig.class.getResource("/").getPath();
         path = path + File.separator + zipFolderName + File.separator;
+        DOWNLOAD_ZIP_PATH = path;
         map.put("sxmd/Entity.ftl",new FtlEntity("sxmd/Entity.ftl",path + "entity","{0}.java"));
         map.put("sxmd/AddModel.ftl",new FtlEntity("sxmd/AddModel.ftl",path +"model" + File.separator + "am","{0}AddModel.java"));
         map.put("sxmd/EditModel.ftl",new FtlEntity("sxmd/EditModel.ftl",path +"model" + File.separator + "em","{0}EditModel.java"));

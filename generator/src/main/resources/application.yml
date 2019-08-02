@@ -32,6 +32,7 @@ mybatis:
 sxmd:
   basedate: mysql
   zip-download-folder-name: mytest  # 就相当于表名称
-
+  sql-type-to-java-type: "{varchar: 'String',timestamp: 'Date',bool: 'boolean',int4: 'Integer'}"
+  filter-entity: cs,pkid,ct
 
 
