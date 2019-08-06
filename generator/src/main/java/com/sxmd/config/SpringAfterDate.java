@@ -1,5 +1,6 @@
 package com.sxmd.config;
 
+import com.sxmd.help.SqlToJavaHelp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -29,11 +30,13 @@ public class SpringAfterDate implements ApplicationRunner {
     @Value("#{'${sxmd.filter-entity}'.split(',')}")
     private List list;
 
+    @Value("${sxmd.table-name-to-java-name-strategy}")
+    private String strategy;
+
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Map<String, String> map = this.map;
-        List list = this.list;
+        SqlToJavaHelp.initMapAndListData(this.map,this.list,strategy);
         FtlConfig.initZipDate(folderName);
         log.debug("=============项目启动完成=============");
     }

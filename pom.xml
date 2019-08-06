@@ -25,7 +25,6 @@
         <module>my-project</module>
     </modules>
 
-
     <!-- 相当于使用父 pom-->
     <dependencyManagement>
         <dependencies>
@@ -75,4 +74,19 @@
         </dependency>
 
     </dependencies>
+
+    <!-- 打包工具 默认使用-->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

@@ -26,28 +26,18 @@ public class SqlToJavaHelp {
 
     private static List list = new ArrayList<String>();
 
-    static {
-        // 类型转化
-        map.put("varchar","String");
-        map.put("timestamp","Date");
-        map.put("bool","boolean");
-        map.put("int4","Integer");
-
-
-        // 字段过滤
-        list.add("cs");
-        list.add("pkid");
-        list.add("ct");
-        list.add("cu");
-        list.add("mt");
-        list.add("mu");
-        list.add("cd");
-        list.add("co");
-    }
+    private static String TABLE_NAME_TO_JAVA_NAME_STRATEGY = "0";
 
     private SqlToJavaHelp(){
         throw new SxmdException("工具类不能被实例化");
     }
+
+    public static void initMapAndListData(Map mapData,List listData,String strategy){
+        map.putAll(mapData);
+        list.addAll(listData);
+        TABLE_NAME_TO_JAVA_NAME_STRATEGY = strategy;
+    }
+
 
     /**
      * Description:   实体列的类型转化
@@ -85,8 +75,17 @@ public class SqlToJavaHelp {
      */
     public static String classNameByTable(String tableName){
         // 截取第一个下划线前面的部分
-        if(tableName.contains("_")){
-            tableName = tableName.substring(tableName.indexOf('_'), tableName.length());
+        String strategy = "0";
+        String strategy1 = "1";
+        if(strategy.equals(TABLE_NAME_TO_JAVA_NAME_STRATEGY)){
+
+        }else if(strategy1.equals(TABLE_NAME_TO_JAVA_NAME_STRATEGY)){
+            String indexStr = "_";
+            if(tableName.contains(indexStr)){
+                tableName = tableName.substring(tableName.indexOf(indexStr), tableName.length());
+            }
+        }else {
+            tableName = TABLE_NAME_TO_JAVA_NAME_STRATEGY;
         }
         // 驼峰式转化 并首字母大写
         String capitalize = StringUtil.capitalize(tableName);

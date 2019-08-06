@@ -11,16 +11,10 @@ import com.hollysys.smartfactory.account.system.model.vm.${table.tableNameToJava
 import com.hollysys.smartfactory.account.system.model.vr.${table.tableNameToJavaName}AddModel;
 import com.hollysys.smartfactory.account.system.model.vr.${table.tableNameToJavaName}EditModel;
 import com.hollysys.smartfactory.account.system.service.${table.tableNameToJavaName}Service;
-import com.hollysys.smartfactory.account.utils.OrderType;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 
 /**
 * Description: ${table.tableComment!''} 实现类

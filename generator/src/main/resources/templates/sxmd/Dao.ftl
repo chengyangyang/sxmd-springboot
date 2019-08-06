@@ -1,8 +1,8 @@
-package com.hollysys.smartfactory.account.system.dao.mapper;
+package com.sxmd.content.${folderName}.dao;
 
-import com.hollysys.smartfactory.account.system.dao.BaseDao;
-import com.hollysys.smartfactory.account.system.model.dm.${table.tableNameToJavaName};
-import com.hollysys.smartfactory.account.system.model.vm.${table.tableNameToJavaName}ListModel;
+import com.sxmd.base.BaseDao;
+import com.sxmd.content.${folderName}.entity.${table.tableNameToJavaName};
+import com.sxmd.content.${folderName}.model.lm.${table.tableNameToJavaName}ListModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

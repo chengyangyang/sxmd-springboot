@@ -30,9 +30,13 @@ mybatis:
 # 支持 postgresql /mysql/
 
 sxmd:
+  # 数据库的选择
   basedate: mysql
-  zip-download-folder-name: mytest  # 就相当于表名称
-  sql-type-to-java-type: "{varchar: 'String',timestamp: 'Date',bool: 'boolean',int4: 'Integer'}"
-  filter-entity: cs,pkid,ct
-
-
+  zip-download-folder-name: mytest2  # 就相当于表名称  如 "{varchar: 'String',timestamp: 'Date'}"
+  #sql 类型转化为  Java 类型
+  sql-type-to-java-type: "{varchar: 'String',timestamp: 'Date',bool: 'boolean',
+  int4: 'Integer',int: 'Integer',bigint: 'Integer',longtext: 'String',longblob: 'String',tinyint: 'Integer',datetime: 'Date'}"
+  # 字段过滤 主要针对entity 不生成的字段  如  cs,pkid,ct
+  filter-entity: id,create_date,pkid,ct
+  #  table表名称转化为java类的名称策略（默认都会进行驼峰转化）  0 原文件名称  1 去掉第一个_前面的部分   或者直接指定名称
+  table-name-to-java-name-strategy : 0

@@ -1,10 +1,12 @@
-package com.hollysys.smartfactory.account.system.service;
+package com.sxmd.content.${folderName}.service;
 
 import com.github.pagehelper.PageInfo;
-import com.hollysys.smartfactory.account.system.model.vm.${table.tableNameToJavaName}ListModel;
-import com.hollysys.smartfactory.account.system.model.vm.${table.tableNameToJavaName}Model;
-import com.hollysys.smartfactory.account.system.model.vr.${table.tableNameToJavaName}Model;
-import com.hollysys.smartfactory.account.system.model.vr.${table.tableNameToJavaName}Model;
+import com.sxmd.content.mytest.model.am.${table.tableNameToJavaName}AddModel;
+import com.sxmd.content.mytest.model.dm.${table.tableNameToJavaName}Model;
+import com.sxmd.content.mytest.model.em.${table.tableNameToJavaName}EditModel;
+import com.sxmd.content.mytest.model.lm.${table.tableNameToJavaName}ListModel;
+
+import java.util.Map;
 
 /**
 * Description: ${table.tableComment!''}接口

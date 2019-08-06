@@ -1,7 +1,10 @@
-package com.hollysys.smartfactory.account.system.model.dm;
+package com.sxmd.content.${folderName}.entity;
+import com.sxmd.base.BaseEntity;
 
 import lombok.Data;
 import javax.persistence.Table;
+
+import java.util.Date;
 
 /**
 * Description: ${table.tableComment!''}实体
@@ -12,12 +15,14 @@ import javax.persistence.Table;
 */
 @Data
 @Table(name = "${table.tableName}")
-public class ${fileName} extends BaseModel {
+public class ${fileName} extends BaseEntity {
 
 
     <#list columns as li>
     <#if li.columnComment??>
-    // ${li.columnComment}
+    /**
+    * ${li.columnComment}
+    */
     </#if>
     private ${li.columnTypeToJava} ${li.columnNameToJava};
 
