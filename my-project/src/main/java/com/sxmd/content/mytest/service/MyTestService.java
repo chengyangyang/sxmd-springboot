@@ -1,6 +1,7 @@
 package com.sxmd.content.mytest.service;
 
 import com.github.pagehelper.PageInfo;
+import com.sxmd.base.PageResult;
 import com.sxmd.content.mytest.model.am.MyTestAddModel;
 import com.sxmd.content.mytest.model.dm.MyTestModel;
 import com.sxmd.content.mytest.model.em.MyTestEditModel;
@@ -40,7 +41,7 @@ public interface MyTestService {
     * @param id: 主键
     * @date
     */
-    String deleteMyTest(String id);
+    boolean deleteMyTest(String id);
 
     /**
     * Description:   测试表-详情
@@ -58,7 +59,7 @@ public interface MyTestService {
     * @param map:  条件
     * @date
     */
-    PageInfo<MyTestListModel> findMyTestList(Integer page, Integer pageSize, Map<String, Object> map);
+    PageResult<MyTestListModel> findMyTestList(Integer page, Integer pageSize, Map<String, Object> map);
 
 
 }

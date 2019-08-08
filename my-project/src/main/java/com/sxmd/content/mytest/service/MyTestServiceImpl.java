@@ -2,13 +2,13 @@ package com.sxmd.content.mytest.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sxmd.base.PageResult;
 import com.sxmd.content.mytest.dao.MyTestDao;
 import com.sxmd.content.mytest.entity.MyTest;
 import com.sxmd.content.mytest.model.am.MyTestAddModel;
 import com.sxmd.content.mytest.model.dm.MyTestModel;
 import com.sxmd.content.mytest.model.em.MyTestEditModel;
 import com.sxmd.content.mytest.model.lm.MyTestListModel;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -51,14 +51,11 @@ public class MyTestServiceImpl implements MyTestService {
     * @date
     */
     @Override
-    public String updateMyTest(MyTestEditModel model) {
-        int i = dao.updateByPrimaryKey();
-        // 查询当前数据
-        MyTest entity = dao.selectByKeyIfNullThrowError(model.getPkid());
-        // 校验
-        checkCs(entity.getCs(), model.getCs());
+    public boolean updateMyTest(MyTestEditModel model) {
+        MyTest entity = dao.selectByPrimaryKey(model);
         BeanUtils.copyProperties(model, entity);
-        return dao.updateAll(entity);
+        int result = dao.updateByPrimaryKey(entity);
+        return result > 0 ? true : false;
     }
 
     /**
@@ -68,9 +65,9 @@ public class MyTestServiceImpl implements MyTestService {
     * @date
     */
     @Override
-    public String deleteMyTest(String id) {
-        dao.selectByKeyIfNullThrowError(id);
-        return this.delete(id);
+    public boolean deleteMyTest(String id) {
+        int result = dao.deleteByPrimaryKey(id);
+        return result > 0 ? true : false;
     }
 
 
@@ -81,8 +78,8 @@ public class MyTestServiceImpl implements MyTestService {
     * @date
     */
     @Override
-    public MyTestModel getEMyTestById(String id) {
-        MyTest entity = dao.selectByKeyIfNullThrowError(id);
+    public MyTestModel getMyTestById(String id) {
+        MyTest entity = dao.selectByPrimaryKey(id);
         MyTestModel model = new MyTestModel();
         BeanUtils.copyProperties(entity,model);
         return model;
@@ -98,26 +95,11 @@ public class MyTestServiceImpl implements MyTestService {
     * @date
     */
     @Override
-    public PageInfo<MyTestListModel> findMyTestList(Integer page, Integer pageSize, Map<String,Object> map) {
-        int limit = pageSize != null ? pageSize : 10;
-        int offset = (page != null ? page : 1);
-        PageHelper.startPage(offset, limit);
+    public PageResult<MyTestListModel> findMyTestList(Integer page, Integer pageSize, Map<String,Object> map) {
         List<MyTestListModel> list = dao.findMyTestList(map);
-        PageInfo<MyTestListModel> pageInfo = new PageInfo<>(list);
-        return pageInfo;
+        PageResult<MyTestListModel> result = new PageResult<>(page,pageSize,list);
+        return result;
     }
 
-    /**
-    * Description:   cs 的比较
-    * @author sxmd
-    * @param currentCs:
-    * @param cs:
-    * @date
-    */
-    private void checkCs(String currentCs, String cs) {
-        if (!StringUtils.equals(currentCs, cs)) {
-        throw new CustomException(-100182, "信息已被其他用户修改");
-        }
-    }
 
 }
