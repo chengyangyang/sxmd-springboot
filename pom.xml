@@ -23,6 +23,7 @@
         <module>common</module>
         <module>mybatis-plug</module>
         <module>my-project</module>
+        <module>netty-gateway</module>
     </modules>
 
     <!-- 相当于使用父 pom-->
