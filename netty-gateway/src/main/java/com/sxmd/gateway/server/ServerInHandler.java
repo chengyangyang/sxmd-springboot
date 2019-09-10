@@ -4,11 +4,12 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.util.AttributeKey;
 
 import java.net.SocketAddress;
 
 /**
- * Description:
+ * Description: 服务端接收
  *
  * @author cy
  * @date 2019年09月03日 9:14
@@ -18,6 +19,9 @@ public class ServerInHandler extends SimpleChannelInboundHandler<Object> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext cxf, Object msg) throws Exception {
+        System.out.println("通道id为：" + cxf.channel().id().asLongText());
+        Object name = cxf.channel().attr(AttributeKey.valueOf("name")).get();
+        System.out.println("传递的数据为：" + name);
         ByteBuf buf = (ByteBuf) msg;
         byte[] reg = new byte[buf.readableBytes()];
         buf.readBytes(reg);
@@ -26,7 +30,17 @@ public class ServerInHandler extends SimpleChannelInboundHandler<Object> {
         // 回复消息
         String respMsg = "你好，" + body + "，我收到了你的消息$";
         ByteBuf byteBuf = Unpooled.copiedBuffer(respMsg.getBytes());
+        cxf.channel().attr(AttributeKey.valueOf("addredss")).set("abc");
         cxf.writeAndFlush(byteBuf);
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        // 客户端断开连接了
+        ctx.channel().close();
+        // 关闭服务端
+        System.out.println("服务端请求关闭");
+        ctx.channel().parent().close();
     }
 
     @Override

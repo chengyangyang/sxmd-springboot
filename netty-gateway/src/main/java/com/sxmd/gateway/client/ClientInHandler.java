@@ -4,6 +4,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.util.AttributeKey;
 
 /**
  * Description:
@@ -39,7 +40,10 @@ public class ClientInHandler extends SimpleChannelInboundHandler<Object> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
+        System.out.println("通道id为：" + ctx.channel().id().asLongText());
         ByteBuf buf = (ByteBuf) msg;
+        Object name = ctx.channel().attr(AttributeKey.valueOf("name")).get();
+        System.out.println("传递的数据为：" + name);
         byte[] req = new byte[buf.readableBytes()];
         buf.readBytes(req);
         String body = new String(req, "UTF-8");
