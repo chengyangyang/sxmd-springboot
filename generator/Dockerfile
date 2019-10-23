@@ -7,8 +7,6 @@ ARG JAR_FILE
 WORKDIR /worker
 # 系统时间进行统一
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-# 在环境变量中加入值
-ENV createDate `date`
 ENV appOriginName ${JAR_FILE}
 # 将jar 文件复制到工作目录中
 ADD ${JAR_FILE}  /worker/app.jar
