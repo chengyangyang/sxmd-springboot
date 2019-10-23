@@ -18,7 +18,7 @@
         <!--跳过docker镜像 打包-->
         <dockerfile.skip>true</dockerfile.skip>
         <!--跳过测试 打包-->
-        <test.skip>false</test.skip>
+        <test.skip>true</test.skip>
         <docker.repostory>sxmd-springboot</docker.repostory>
     </properties>
 
