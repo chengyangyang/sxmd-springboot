@@ -36,15 +36,24 @@
                 <groupId>com.spotify</groupId>
                 <artifactId>dockerfile-maven-plugin</artifactId>
                 <version>${dockerfile.maven.plugin.version}</version>
-                <configuration>
-                    <contextDirectory>${project.basedir}</contextDirectory>
-                    <repository>${docker.repostory}/${project.artifactId}</repository>  <!--镜像名称-->
-                    <tag>${project.version}</tag>  <!--镜像标签-->
-                    <buildDirectory>${project.build.directory}</buildDirectory>
-                    <buildArgs>
-                        <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>  <!--构建时传递的参数-->
-                    </buildArgs>
-                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                        <configuration>
+                            <contextDirectory>${project.basedir}</contextDirectory>
+                            <repository>${docker.repostory}/${project.artifactId}</repository>  <!--镜像名称-->
+                            <tag>${project.version}</tag>  <!--镜像标签-->
+                            <buildDirectory>${project.build.directory}</buildDirectory>
+                            <useMavenSettingsForAuth>false</useMavenSettingsForAuth>
+                            <verbose>true</verbose>
+                            <buildArgs>
+                                <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>  <!--构建时传递的参数-->
+                            </buildArgs>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

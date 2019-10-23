@@ -3,6 +3,9 @@
 version: '3'
 services:
   web:
+    build: ./
+    image: ""
+    restart: always
     environment:
       - JAR_FILE=/worker/app.jar
     ports:
