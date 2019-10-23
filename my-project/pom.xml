@@ -25,27 +25,9 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- docker 插件配置-->
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>dockerfile-maven-plugin</artifactId>
-                <version>${dockerfile.maven.plugin.version}</version>
-                <configuration>
-                    <contextDirectory>${project.basedir}</contextDirectory>
-                    <repository>${docker.repostory}/${project.artifactId}</repository>  <!--镜像名称-->
-                    <tag>${project.version}</tag>  <!--镜像标签-->
-                    <buildDirectory>${project.build.directory}</buildDirectory>
-                    <buildArgs>
-                        <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>  <!--构建时传递的参数-->
-                    </buildArgs>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
-    <!--打包跳过测试-->
-    <properties>
-        <skipTests>true</skipTests>
-    </properties>
+
 
     <dependencies>
         <!--相当于使用了spring + mybatis 进行了整合-->

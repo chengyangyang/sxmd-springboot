@@ -19,6 +19,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
+                    <skip>${test.skip}</skip>
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
