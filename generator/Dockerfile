@@ -8,7 +8,7 @@ WORKDIR /worker
 # 系统时间进行统一
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 # 将jar 文件复制到工作目录中
-ADD target/JAR_FILE  /worker/app.jar
+ADD target/${JAR_FILE}  /worker/app.jar
 # 修改文件的访问时间
 RUN bash -c 'touch /worker/app.jar'
 # 启动java文件
