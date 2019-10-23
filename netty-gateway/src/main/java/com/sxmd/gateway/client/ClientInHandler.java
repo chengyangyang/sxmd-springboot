@@ -1,10 +1,13 @@
 package com.sxmd.gateway.client;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.AttributeKey;
+import io.netty.util.internal.StringUtil;
 
 /**
  * Description:
@@ -15,15 +18,15 @@ import io.netty.util.AttributeKey;
  */
 public class ClientInHandler extends SimpleChannelInboundHandler<Object> {
 
-
+    private int count;
     /**
      * 当客户端和服务端 TCP 链路建立成功之后，Netty 的 NIO 线程会调用 channelActive 方法
      */
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         System.out.println("客户连接服务端成功");
-        for (int i = 0; i < 10; i++) {
-            String reqMsg = "我是客户端"+i+"$";
+        for (int i = 0; i < 1; i++) {
+            String reqMsg = "我是客户端";
             ByteBuf reqByteBuf = Unpooled.copiedBuffer(reqMsg.getBytes());
             /**
              * writeBytes：将指定的源数组的数据传输到缓冲区
@@ -40,14 +43,9 @@ public class ClientInHandler extends SimpleChannelInboundHandler<Object> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println("通道id为：" + ctx.channel().id().asLongText());
         ByteBuf buf = (ByteBuf) msg;
-        Object name = ctx.channel().attr(AttributeKey.valueOf("name")).get();
-        System.out.println("传递的数据为：" + name);
-        byte[] req = new byte[buf.readableBytes()];
-        buf.readBytes(req);
-        String body = new String(req, "UTF-8");
-        System.out.println(Thread.currentThread().getName() + "服务端返回：" + body);
+        String s = ByteBufUtil.hexDump(buf).toUpperCase();
+        System.out.println("服务端返回"+ count++ +"：" + s);
     }
 
     /**

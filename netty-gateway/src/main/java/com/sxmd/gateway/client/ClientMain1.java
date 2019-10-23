@@ -34,6 +34,7 @@ public class ClientMain1 {
                 Bootstrap b = new Bootstrap();
                 b.group(group)
                         .channel(NioSocketChannel.class)
+                        .option(ChannelOption.SO_RCVBUF, 2048)
                         .option(ChannelOption.TCP_NODELAY, true)
                         .attr(AttributeKey.valueOf("name"),"bbbbbbb")
                         .handler(new ClientPipeLine());

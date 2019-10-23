@@ -4,7 +4,12 @@ version: '3'
 services:
   web:
     environment:
-      - JAR_FILE=target/someProject-app.jar
-    build: ./
+      - JAR_FILE=/worker/app.jar
     ports:
-      - "8188:8188"
+      - "8096:8096"
+    container_name: sxmd_springboot_generator
+
+  mysql:
+    image: "mysql"
+    ports:
+      - "3306:3306"

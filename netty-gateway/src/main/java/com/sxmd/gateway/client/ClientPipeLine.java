@@ -20,11 +20,9 @@ public class ClientPipeLine extends ChannelInitializer<SocketChannel> {
 
     @Override
     protected void initChannel(SocketChannel channel) throws Exception {
-        //以$为分隔符
-        ByteBuf buf = Unpooled.copiedBuffer("$".getBytes());
         ChannelPipeline pipeline = channel.pipeline();
         // 防止粘包的问题
-        pipeline.addLast(new DelimiterBasedFrameDecoder(2018,buf));
+        pipeline.addLast(new LengthFieldBasedFrameDecoder(2048,14,2));
         // pipeline.addLast(new StringDecoder());
         pipeline.addLast(new ClientInHandler());
     }

@@ -5,6 +5,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
 import io.netty.channel.ChannelPromise;
+import org.apache.tomcat.util.buf.HexUtils;
 
 /**
  * Description:
@@ -17,9 +18,7 @@ public class ServerOutHandler extends ChannelOutboundHandlerAdapter {
 
     @Override
     public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
-        ByteBuf msg1 = (ByteBuf) msg;
-        String s = "out 处理：" + new String(msg1.array());
-        ByteBuf byteBuf = Unpooled.copiedBuffer(s.getBytes());
-        ctx.write(byteBuf, promise);
+
+        ctx.writeAndFlush(msg,promise);
     }
 }

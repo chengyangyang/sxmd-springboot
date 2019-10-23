@@ -51,7 +51,6 @@ public class ClientMain {
                 group.shutdownGracefully();
             }
         }
-
     }
 
 }

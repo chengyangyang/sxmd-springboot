@@ -35,6 +35,7 @@ public class ServerMain {
                     .channel(NioServerSocketChannel.class)
                     .option(ChannelOption.SO_BACKLOG, 100)
                     .handler(new LoggingHandler(LogLevel.INFO))
+                    .childOption(ChannelOption.SO_SNDBUF,2048)
                     .childAttr(AttributeKey.valueOf("name"),"123")
                     .childHandler(new ServerPipeLine());
             ChannelFuture f = boot.bind(port).sync();

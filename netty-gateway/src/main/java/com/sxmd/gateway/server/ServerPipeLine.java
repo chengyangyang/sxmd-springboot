@@ -22,12 +22,7 @@ public class ServerPipeLine extends ChannelInitializer<SocketChannel> {
 
     @Override
     protected void initChannel(SocketChannel channel) throws Exception {
-        //以$为分隔符
-        ByteBuf buf = Unpooled.copiedBuffer("$".getBytes());
-        // 解决粘包的问题
         ChannelPipeline pipeline = channel.pipeline();
-        pipeline.addLast(new DelimiterBasedFrameDecoder(2018,buf));
-        // pipeline.addLast(new StringDecoder());
         pipeline.addLast(new ServerOutHandler());
         pipeline.addLast(new ServerInHandler());
     }
