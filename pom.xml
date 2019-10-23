@@ -14,7 +14,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <dockerfile.maven.plugin.version>1.4.10</dockerfile.maven.plugin.version>
+        <dockerfile.maven.plugin.version>1.4.5</dockerfile.maven.plugin.version>
+        <!--跳过docker镜像 打包-->
+        <dockerfile.skip>true</dockerfile.skip>
+        <!--跳过测试 打包-->
+        <test.skip>false</test.skip>
         <docker.repostory>sxmd-springboot</docker.repostory>
     </properties>
 
@@ -83,7 +87,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <skip>true</skip>
+                    <skip>${test.skip}</skip>
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>

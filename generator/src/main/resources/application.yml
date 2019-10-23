@@ -9,7 +9,7 @@ server:
 spring:
   # 环境的选择   dev | prod
   profiles:
-    active: prod
+    active: dev
   # freemarker 配置
   freemarker:
     cache: false
