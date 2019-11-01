@@ -165,7 +165,7 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
         // 获取客户端向服务端发送的消息
         String request = ((TextWebSocketFrame) frame).text();
         TextArea cevice = WebsocketToolApplication.stageMainController.getCevice();
-        cevice.appendText(WebsocketToolApplication.PRE + ctx.channel().remoteAddress() +"\n" + request +"\n");
+        cevice.appendText(WebsocketToolApplication.getPre() + ctx.channel().remoteAddress() +"\n" + request +"\n");
         log.debug("websocket 收到的内容是："+request);
     }
 

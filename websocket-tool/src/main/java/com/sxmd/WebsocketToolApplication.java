@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class WebsocketToolApplication extends Application {
 
-    public static String PRE = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "--->";
+
     public static StageMainController stageMainController = null;
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -41,6 +41,10 @@ public class WebsocketToolApplication extends Application {
                 thread.stop();
             }
         });
+    }
+
+    public static String getPre(){
+       return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "--->";
     }
 
     public static void main(String[] args) {

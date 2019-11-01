@@ -25,13 +25,13 @@ public class Proxy {
                 @Override
                 public void operationComplete(ChannelFuture channelFuture) throws Exception {
                     if(channelFuture.isSuccess()){
-                        WebsocketToolApplication.stageMainController.getCevice().appendText(WebsocketToolApplication.PRE + "\nwebsocket 启动成功\n");
+                        WebsocketToolApplication.stageMainController.getCevice().appendText(WebsocketToolApplication.getPre() + "\nwebsocket 启动成功\n");
                     }
                 }
             });
             future.syncUninterruptibly();
             future.channel().closeFuture().syncUninterruptibly();
-            WebsocketToolApplication.stageMainController.getCevice().appendText(WebsocketToolApplication.PRE + "\nwebsocket 关闭成功\n");
+            WebsocketToolApplication.stageMainController.getCevice().appendText(WebsocketToolApplication.getPre() + "\nwebsocket 关闭成功\n");
             future = null;
         } catch (Exception e) {
             e.printStackTrace();
