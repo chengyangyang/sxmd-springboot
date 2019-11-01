@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Description:
@@ -17,6 +19,7 @@ import java.net.URL;
  */
 public class WebsocketToolApplication extends Application {
 
+    public static String PRE = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "--->";
     public static StageMainController stageMainController = null;
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -28,7 +31,7 @@ public class WebsocketToolApplication extends Application {
         primaryStage.setScene(scene);
         // 窗口显示
         primaryStage.show();
-        primaryStage.setResizable(false);
+        //primaryStage.setResizable(false);
         primaryStage.setTitle("websocket server tool");
         // 监听窗口的关闭
         primaryStage.setOnCloseRequest(x->{

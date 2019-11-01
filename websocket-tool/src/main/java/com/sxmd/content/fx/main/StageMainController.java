@@ -24,22 +24,20 @@ public class StageMainController {
     public static Thread thread = null;
 
     public void start(){
-        if(thread != null){
-            thread.stop();
-            thread = null;
+        if(Proxy.future != null){
             but.setText("监听");
-            return;
+            Proxy.future.channel().close();
+        }else {
+            String port = contentPort.getText();
+            thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Proxy.initFrontend(Integer.valueOf(port));
+                }
+            });
+            thread.start();
+            but.setText("停止");
         }
-        String port = contentPort.getText();
-         thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Proxy.initFrontend(Integer.valueOf(port));
-            }
-        });
-        thread.start();
-        but.setText("停止");
-        System.out.println("==============服务启动成功=============");
     }
 
     public void sendMsg(){
@@ -51,7 +49,5 @@ public class StageMainController {
     public void clear(){
         cevice.clear();
     }
-
-
 
 }
