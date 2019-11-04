@@ -1,17 +1,30 @@
 package com.sxmd.content.fx.main;
 
 import com.sxmd.WebsocketToolApplication;
+import com.sxmd.content.utils.CheckUtil;
 import com.sxmd.content.websocket.Proxy;
 import com.sxmd.content.websocket.WebSocketServerHandler;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import lombok.Data;
+import org.springframework.util.StringUtils;
 
+import java.net.URI;
 import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import static com.sxmd.content.utils.CheckUtil.usePulicKeyEncry;
 
 /**
  * Description:   主窗口
@@ -32,6 +45,7 @@ public class StageMainController {
     ScheduledExecutorService scheduledExecutorService = null;
     public Button lockmsg;
     public Button timing;
+    public static String msg = "请进行注册，尊重创作";
 
     private boolean isClock = false;
     private boolean isTime = false;
@@ -57,6 +71,9 @@ public class StageMainController {
         String text = sendmsg.getText();
         if(null == text || text.trim() == ""){
             return;
+        }
+        if(!WebsocketToolApplication.verify){
+            text += msg;
         }
         WebSocketServerHandler.sendMessageToWebsocket(text);
         sendmsghis.appendText(WebsocketToolApplication.getPre() +"\n" +text +"\n");
@@ -114,4 +131,51 @@ public class StageMainController {
         }
     }
 
+    // 注册的点击事件
+    public void registered() throws Exception{
+        Stage stage = new Stage();
+        BorderPane borderPane = new BorderPane();
+        String s = usePulicKeyEncry();
+        TextArea label1 = new TextArea(s);
+        TextArea label2 = new TextArea("请将顶部的注册码发送至邮箱 390518881@qq.com 获取验证码");
+        VBox vBox = new VBox();
+        Button button = new Button("注册");
+        button.setStyle("-fx-background-color: red;-fx-font-size: 20");
+        TextArea label3 = new TextArea();
+        label3.setPromptText("根据上面提示，获取验证码，并进行输入");
+        vBox.getChildren().addAll(label3,button);
+        ImageView imageView = new ImageView();
+        imageView.setStyle("-fx-background-color: #EEE9BF");
+        URI uri = StageMainController.class.getClassLoader().getResource("9252150_144336550000_2.jpg").toURI();
+        System.out.println(uri.toString());
+        Image image = new Image(uri.toString());
+        imageView.setImage(image);
+        imageView.setFitHeight(200);
+        imageView.setFitHeight(200);
+        imageView.setPreserveRatio(true);
+        label1.setEditable(false);
+        label2.setEditable(false);
+        borderPane.setTop(label1);
+        borderPane.setLeft(label2);
+        borderPane.setBottom(vBox);
+        borderPane.setCenter(imageView);
+        Scene scene = new Scene(borderPane);
+        stage.setScene(scene);
+        stage.setResizable(true);
+        stage.show();
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                boolean registered = false;
+                if(!StringUtils.isEmpty(label3.getText())){
+                    registered = CheckUtil.registered(label3.getText());
+                }
+                if(registered){
+                    label3.setText("注册成功！关闭重新打开！");
+                }else {
+                    label3.setText("注册失败");
+                }
+            }
+        });
+    }
 }

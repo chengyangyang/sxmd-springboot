@@ -1,14 +1,17 @@
 package com.sxmd;
 
 import com.sxmd.content.fx.main.StageMainController;
+import com.sxmd.content.utils.CheckUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.prefs.Preferences;
 
 /**
  * Description:
@@ -21,11 +24,20 @@ public class WebsocketToolApplication extends Application {
 
 
     public static StageMainController stageMainController = null;
+    public static boolean verify = false;
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) {
+        // 进行校验
+        Preferences preferences = Preferences.userNodeForPackage(WebsocketToolApplication.class);
+        // preferences.putBoolean("verify", false);
+        verify = preferences.getBoolean("verify", false);
         URL resource = getClass().getResource("/fx/main/StageMain.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(resource);
-        fxmlLoader.load();
+        try {
+            fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         stageMainController = fxmlLoader.getController();
         Scene scene = new Scene(fxmlLoader.getRoot());
         primaryStage.setScene(scene);

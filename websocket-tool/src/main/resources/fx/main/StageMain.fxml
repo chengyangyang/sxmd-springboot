@@ -18,6 +18,7 @@
                   <TextField fx:id="contentPort" layoutX="7.0" layoutY="14.0" prefHeight="23.0" prefWidth="80.0" text="9731" />
             
                               <Button fx:id="but" layoutX="7.0" layoutY="51.0" mnemonicParsing="false" onAction="#start" prefHeight="23.0" prefWidth="80.0" text="监听" textAlignment="JUSTIFY" textFill="#653a3a" />
+                  <Button layoutY="562.0" mnemonicParsing="false" onAction="#registered" prefHeight="23.0" prefWidth="94.0" text="注册" AnchorPane.bottomAnchor="0.0" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="15.0" prefHeight="446.0" prefWidth="228.0">
