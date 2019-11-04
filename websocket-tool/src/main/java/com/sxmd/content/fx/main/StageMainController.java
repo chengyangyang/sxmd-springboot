@@ -146,7 +146,7 @@ public class StageMainController {
         vBox.getChildren().addAll(label3,button);
         ImageView imageView = new ImageView();
         imageView.setStyle("-fx-background-color: #EEE9BF");
-        URI uri = StageMainController.class.getClassLoader().getResource("IMG_20191104_203644.jpg").toURI();
+        URI uri = StageMainController.class.getResource("/IMG_20191104_203644.jpg").toURI();
         System.out.println(uri.toString());
         Image image = new Image(uri.toString());
         imageView.setImage(image);

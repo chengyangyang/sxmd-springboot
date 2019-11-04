@@ -4,6 +4,9 @@ import org.hyperic.sigar.*;
 import org.springframework.util.FileCopyUtils;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Map;
@@ -64,8 +67,10 @@ public class ComputerInfoUtil {
         String javaHomePath = property("java.library.path");
         File file = new File(javaHomePath.split(";")[0]  + File.separator + "sigar-amd64-winnt.dll");
         if(!file.exists()){
-            File file1 = new File(ComputerInfoUtil.class.getClassLoader().getResource("sigar-amd64-winnt.dll").toURI());
-            FileCopyUtils.copy(file1,file);
+            //
+            OutputStream outputStream = new FileOutputStream(file);
+            InputStream resourceAsStream = ComputerInfoUtil.class.getResourceAsStream("/sigar-amd64-winnt.dll");
+            FileCopyUtils.copy(resourceAsStream,outputStream);
         }
     }
 
