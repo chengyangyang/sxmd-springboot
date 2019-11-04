@@ -137,7 +137,7 @@ public class StageMainController {
         BorderPane borderPane = new BorderPane();
         String s = usePulicKeyEncry();
         TextArea label1 = new TextArea(s);
-        TextArea label2 = new TextArea("请将顶部的注册码发送至邮箱 390518881@qq.com 获取验证码");
+        TextArea label2 = new TextArea("请将顶部的注册码发送至邮箱 390518881@qq.com 获取验证码,每位10元");
         VBox vBox = new VBox();
         Button button = new Button("注册");
         button.setStyle("-fx-background-color: red;-fx-font-size: 20");
@@ -146,7 +146,7 @@ public class StageMainController {
         vBox.getChildren().addAll(label3,button);
         ImageView imageView = new ImageView();
         imageView.setStyle("-fx-background-color: #EEE9BF");
-        URI uri = StageMainController.class.getClassLoader().getResource("9252150_144336550000_2.jpg").toURI();
+        URI uri = StageMainController.class.getClassLoader().getResource("IMG_20191104_203644.jpg").toURI();
         System.out.println(uri.toString());
         Image image = new Image(uri.toString());
         imageView.setImage(image);
