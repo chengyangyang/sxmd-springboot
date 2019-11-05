@@ -3,10 +3,7 @@ package com.sxmd.content.utils;
 import org.hyperic.sigar.*;
 import org.springframework.util.FileCopyUtils;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Map;
@@ -62,15 +59,22 @@ public class ComputerInfoUtil {
      * @author cy
      * @date 2019/11/4 16:19
      */
-    public static void init() throws Exception{
+    public static void init() {
         // 在启动之前必须将sigar-amd64-winnt.dll 文件导入到Java bin 的目录下
         String javaHomePath = property("java.library.path");
-        File file = new File(javaHomePath.split(";")[0]  + File.separator + "sigar-amd64-winnt.dll");
-        if(!file.exists()){
-            //
-            OutputStream outputStream = new FileOutputStream(file);
-            InputStream resourceAsStream = ComputerInfoUtil.class.getResourceAsStream("/sigar-amd64-winnt.dll");
-            FileCopyUtils.copy(resourceAsStream,outputStream);
+        String[] split = javaHomePath.split(";");
+        for (int i = 0; i < split.length; i++) {
+            File file = new File(javaHomePath.split(";")[i]  + File.separator + "sigar-amd64-winnt.dll");
+            if(!file.exists()){
+                OutputStream outputStream = null;
+                try {
+                    outputStream = new FileOutputStream(file);
+                    InputStream resourceAsStream = ComputerInfoUtil.class.getResourceAsStream("/sigar-amd64-winnt.dll");
+                    FileCopyUtils.copy(resourceAsStream,outputStream);
+                } catch (IOException e) {
+                    continue;
+                }
+            }
         }
     }
 
