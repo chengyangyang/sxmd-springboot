@@ -6,6 +6,7 @@ import com.sxmd.content.utils.ComputerInfoUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -44,6 +45,7 @@ public class WebsocketToolApplication extends Application {
         stageMainController = fxmlLoader.getController();
         Scene scene = new Scene(fxmlLoader.getRoot());
         primaryStage.setScene(scene);
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/title.png")));
         // 窗口显示
         primaryStage.show();
         //primaryStage.setResizable(false);

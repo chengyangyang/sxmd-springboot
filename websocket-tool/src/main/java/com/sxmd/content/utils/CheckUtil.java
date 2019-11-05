@@ -60,6 +60,7 @@ public class CheckUtil {
     public static String getSign(String privateKey,String data) throws Exception{
         // 解密
         String decrypt = decrypt(data, getPrivateKey(privateKey));
+        System.out.println("解密得到得数据:"+decrypt);
         // 签名
         String dataMesg = "cy" + decrypt;
         String sign = sign(dataMesg, getPrivateKey(privateKey));
