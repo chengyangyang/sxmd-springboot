@@ -67,9 +67,8 @@ public class CheckUtil {
     }
 
     public static void main(String[] args) throws Exception{
-        String s = usePulicKeyEncry();
-        System.out.println(s);
-        String sign = getSign(privateKey, s);
+        String data = "rpCmJn8urDQxU6k5QGs3oBKoedv2b+HOauMdTJE5W6S6lkj9mKcLQ4D0rEqUm6T/n4zecbLePT0OBzPtTx+BOUC6SLCeKJoZYfIoqJYzyPriG5tTkAxgKWlA8dZalqyMvjWXdLXjs1VbhEVHQYrH4TVeAWgp+uFJhk+eXC54LXM=";
+        String sign = getSign(privateKey, data);
         System.out.println(sign);
     }
 
@@ -85,7 +84,7 @@ public class CheckUtil {
         Preferences preferences = Preferences.userNodeForPackage(WebsocketToolApplication.class);
         try {
             if(verify(sign)){
-                preferences.getBoolean("verify", true);
+                preferences.putBoolean("verify", true);
                 return true;
             }
         } catch (Exception e) {
