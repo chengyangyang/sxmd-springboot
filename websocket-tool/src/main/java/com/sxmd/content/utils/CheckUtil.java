@@ -27,7 +27,6 @@ public class CheckUtil {
      * @date 2019/11/4 17:13
      */
     public static String encry() throws Exception{
-        ComputerInfoUtil.init();
         String cpuType = ComputerInfoUtil.getCpuType();
         String netMac = ComputerInfoUtil.getNetMac();
         String encode = DigestUtils.md5DigestAsHex((cpuType + netMac).getBytes());

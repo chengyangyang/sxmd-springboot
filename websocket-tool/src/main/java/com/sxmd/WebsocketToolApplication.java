@@ -2,6 +2,7 @@ package com.sxmd;
 
 import com.sxmd.content.fx.main.StageMainController;
 import com.sxmd.content.utils.CheckUtil;
+import com.sxmd.content.utils.ComputerInfoUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -27,6 +28,8 @@ public class WebsocketToolApplication extends Application {
     public static boolean verify = false;
     @Override
     public void start(Stage primaryStage) {
+        // 进行文件注册
+        ComputerInfoUtil.init();
         // 进行校验
         Preferences preferences = Preferences.userNodeForPackage(WebsocketToolApplication.class);
         // preferences.putBoolean("verify", false);
