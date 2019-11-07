@@ -68,7 +68,7 @@ public class CheckUtil {
     }
 
     public static void main(String[] args) throws Exception{
-        String data = "rpCmJn8urDQxU6k5QGs3oBKoedv2b+HOauMdTJE5W6S6lkj9mKcLQ4D0rEqUm6T/n4zecbLePT0OBzPtTx+BOUC6SLCeKJoZYfIoqJYzyPriG5tTkAxgKWlA8dZalqyMvjWXdLXjs1VbhEVHQYrH4TVeAWgp+uFJhk+eXC54LXM=";
+        String data = "EQYnNrfCdx9IOYnINUzBvRUr6H8U5hH19NSnJGzWiX5x7dzf7ipBFdxU5WmCFssnnLLTCa1gXalDc25ATqsQOrjoZHusTd3f0t1DLJVQMi0WchVQpptoYClkpbLBPUS/WcBIGKZbfgU+rUMQRbkI16DteEt3b6u5UH2F6oTyBOc=";
         String sign = getSign(privateKey, data);
         System.out.println(sign);
     }

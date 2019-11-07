@@ -29,6 +29,7 @@
         <module>my-project</module>
         <module>netty-gateway</module>
         <module>websocket-tool</module>
+        <module>my-learn</module>
     </modules>
 
     <!-- 相当于使用父 pom-->
