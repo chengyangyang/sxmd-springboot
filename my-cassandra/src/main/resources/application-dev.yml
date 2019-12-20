@@ -1,0 +1,19 @@
+
+
+# cassandra 设置
+cassandra:
+  cluster-name: test-cluster
+  keyspace-name: cassandra_test
+  contact-points: localhost
+  port: 9042
+  username: cassandra
+  password: cassandra
+
+
+
+
+
+
+
+
+
