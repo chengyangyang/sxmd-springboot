@@ -20,6 +20,10 @@ import java.net.SocketAddress;
 public class ServerInHandler extends SimpleChannelInboundHandler<Object> {
 
 
+    public ServerInHandler() {
+        System.out.println("服务端信息初始化");
+    }
+
     @Override
     protected void channelRead0(ChannelHandlerContext cxf, Object msg) throws Exception {
         ByteBuf buf = (ByteBuf) msg;

@@ -18,6 +18,10 @@ import io.netty.handler.codec.string.StringDecoder;
  */
 public class ClientPipeLine extends ChannelInitializer<SocketChannel> {
 
+    public ClientPipeLine() {
+        System.out.println("客户端管道初始化");
+    }
+
     @Override
     protected void initChannel(SocketChannel channel) throws Exception {
         ChannelPipeline pipeline = channel.pipeline();

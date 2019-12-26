@@ -64,7 +64,4 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
         return false;
     }
 
-
-
-
 }

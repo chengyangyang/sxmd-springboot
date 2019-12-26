@@ -1,4 +1,4 @@
-package com.sxmd.content.mytetst.dao;
+package com.sxmd.content.mytest.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.core.CassandraTemplate;

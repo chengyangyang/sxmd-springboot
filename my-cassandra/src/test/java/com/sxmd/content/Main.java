@@ -1,5 +1,6 @@
 package com.sxmd.content;
 
+import com.sxmd.content.mytest.dao.MySqlDao;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.cassandra.core.CassandraTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +27,9 @@ public class Main {
 
     @Autowired
     private CassandraTemplate cassandraTemplate;
+
+    @Resource
+    private MySqlDao mySqlDao;
 
 
     @Test
@@ -62,6 +67,19 @@ public class Main {
         String cql = "select * from my_test where id = '1'";
         List<Map<String, Object>> result = cassandraTemplate.getCqlOperations().queryForList(cql);
         Assert.assertNotNull(result);
+    }
+
+    @Test
+    public void kvSelectCount(){
+        String cql = "select count(*) from ts_kv_copy";
+        List<Map<String, Object>> result = cassandraTemplate.getCqlOperations().queryForList(cql);
+        Assert.assertNotNull(result);
+    }
+
+    @Test
+    public void kvSelectCountMysql(){
+        long allCount = mySqlDao.getAllCount();
+        Assert.assertTrue(allCount != 0);
     }
 
 }

@@ -19,13 +19,18 @@ import io.netty.util.internal.StringUtil;
 public class ClientInHandler extends SimpleChannelInboundHandler<Object> {
 
     private int count;
+
+    public ClientInHandler() {
+        System.out.println("客户端接收数据，初始化");
+    }
+
     /**
      * 当客户端和服务端 TCP 链路建立成功之后，Netty 的 NIO 线程会调用 channelActive 方法
      */
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         System.out.println("客户连接服务端成功");
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 2; i++) {
             String reqMsg = "我是客户端";
             ByteBuf reqByteBuf = Unpooled.copiedBuffer(reqMsg.getBytes());
             /**

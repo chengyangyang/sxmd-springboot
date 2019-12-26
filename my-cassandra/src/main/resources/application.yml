@@ -10,3 +10,10 @@ spring:
   # 环境的选择   dev | prod
   profiles:
     active: dev
+
+# mybatis
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.sxmd
+  configuration:
+    map-underscore-to-camel-case: true
