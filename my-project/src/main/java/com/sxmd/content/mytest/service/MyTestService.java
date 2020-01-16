@@ -1,7 +1,6 @@
 package com.sxmd.content.mytest.service;
 
-import com.github.pagehelper.PageInfo;
-import com.sxmd.base.PageResult;
+import com.sxmd.base.BasePage;
 import com.sxmd.content.mytest.model.am.MyTestAddModel;
 import com.sxmd.content.mytest.model.dm.MyTestModel;
 import com.sxmd.content.mytest.model.em.MyTestEditModel;
@@ -25,7 +24,7 @@ public interface MyTestService {
     * @return java.lang.String
     * @date  2019/6/12 10:30
     */
-    boolean addMyTest(MyTestAddModel model);
+    boolean insertMyTest(MyTestAddModel model);
 
     /**
     * Description:  测试表-更新
@@ -41,7 +40,7 @@ public interface MyTestService {
     * @param id: 主键
     * @date
     */
-    boolean deleteMyTest(String id);
+    boolean deleteMyTest(Long id);
 
     /**
     * Description:   测试表-详情
@@ -49,17 +48,17 @@ public interface MyTestService {
     * @param id: 主键
     * @date
     */
-    MyTestModel getMyTestById(String id);
+    MyTestModel getMyTestById(Long id);
 
     /**
     * Description:   测试表-列表
     * @author sxmd
-    * @param page: 第几页
+    * @param pageNum: 第几页
     * @param pageSize: 显示条数
     * @param map:  条件
     * @date
     */
-    PageResult<MyTestListModel> findMyTestList(Integer page, Integer pageSize, Map<String, Object> map);
+    BasePage<MyTestListModel> findMyTestList(Integer pageNum, Integer pageSize, Map<String, Object> map);
 
 
 }

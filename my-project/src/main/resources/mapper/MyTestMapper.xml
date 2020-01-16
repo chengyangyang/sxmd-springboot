@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sxmd.content.mytest.dao.MyTestDao">
+
+    <select id="findMyTestList" resultType="com.sxmd.content.mytest.model.lm.MyTestListModel">
+        select * from my_test
+    </select>
+
+</mapper>

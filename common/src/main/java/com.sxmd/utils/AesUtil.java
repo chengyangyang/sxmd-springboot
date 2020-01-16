@@ -1,3 +1,4 @@
+/*
 package com.sxmd.utils;
 
 import lombok.extern.log4j.Log4j2;
@@ -7,60 +8,76 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+*/
 /**
  * Description: 对称加密
  *
  * @author cy
  * @date 2019年08月05日 14:18
  * Version 1.0
- */
+ *//*
+
 @Log4j2
 public class AesUtil {
-    /**
+    */
+/**
      * 密钥
-     */
+     *//*
+
     private static String key = "AD42F6697B045B7580E4FEF93BE80BRG";
     private static String charset = "utf-8";
-    /**
+    */
+/**
      * 偏移量
-     */
+     *//*
+
     private static int offset = 16;
-    /**
+    */
+/**
      * 加密器类型:加密算法为AES,加密模式为CBC,补码方式为PKCS5Padding
-     */
+     *//*
+
     private static String transformation = "AES/CBC/PKCS5Padding";
-    /**
+    */
+/**
      * 算法类型：用于指定生成AES的密钥
-     */
+     *//*
+
     private static String algorithm = "AES";
 
-    /**
+    */
+/**
      * 加密
      *
      * @param content
      * @return
-     */
+     *//*
+
     public static String encrypt(String content) {
         return encrypt(content, key);
     }
 
-    /**
+    */
+/**
      * 解密
      *
      * @param content
      * @return
-     */
+     *//*
+
     public static String decrypt(String content) {
         return decrypt(content, key);
     }
 
-    /**
+    */
+/**
      * 加密
      *
      * @param content 需要加密的内容
      * @param key     加密密码
      * @return
-     */
+     *//*
+
     public static String encrypt(String content, String key) {
         try {
             //构造密钥
@@ -82,14 +99,16 @@ public class AesUtil {
         return null;
     }
 
-    /**
+    */
+/**
      * AES（256）解密
      *
      * @param content 待解密内容
      * @param key     解密密钥
      * @return 解密之后
      * @throws Exception
-     */
+     *//*
+
     public static String decrypt(String content, String key) {
         try {
 
@@ -118,3 +137,4 @@ public class AesUtil {
         System.out.println("解密后：" + decrypt(encryptResultStr));
     }
 }
+*/

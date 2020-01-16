@@ -30,6 +30,7 @@
         <module>netty-gateway</module>
         <module>websocket-tool</module>
         <module>my-learn</module>
+        <module>my-cassandra</module>
     </modules>
 
     <!-- 相当于使用父 pom-->
@@ -47,7 +48,7 @@
     </dependencyManagement>
 
     <dependencies>
-        <!-- web  依赖包-->
+        <!--spring web  相关依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -78,6 +79,12 @@
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
         <optional>true</optional>
+        </dependency>
+        <!-- 日志 方法的注解-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>

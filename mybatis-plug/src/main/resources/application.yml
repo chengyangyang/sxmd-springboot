@@ -14,7 +14,7 @@ spring:
 # mybatis
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.sxmd
+  type-aliases-package: com
   configuration:
     map-underscore-to-camel-case: true
 

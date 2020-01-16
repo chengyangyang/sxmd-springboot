@@ -1,14 +1,12 @@
 package com.sxmd.base;
 
 import com.github.pagehelper.PageInfo;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 
 /**
  * 组件控制器封装
  *
  * @author wuxiaowei
  */
-@ControllerAdvice
 public class BaseController {
 	/**
 	 * ============================ ajax

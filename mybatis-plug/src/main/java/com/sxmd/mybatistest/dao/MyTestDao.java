@@ -24,4 +24,6 @@ public interface MyTestDao extends BaseSelectMapper<MyTestEntity>, BaseInsertMap
      * @date  2019/7/15 11:31
      */
     public String getName(String id);
+
+
 }

@@ -13,6 +13,8 @@ import lombok.Data;
 @Data
 public class MyTestEditModel extends MyTestAddModel {
 
+    private Long id;
+
     private String pkid;
 
     private String cs;
