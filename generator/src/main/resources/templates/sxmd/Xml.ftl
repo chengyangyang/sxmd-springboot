@@ -7,7 +7,7 @@
     </sql>
 
 
-    <select id="find${table.tableNameToJavaName}" resultType="com.sxmd.content.${folderName!''}.model.lm.${table.tableNameToJavaName}ListModel">
+    <select id="find${table.tableNameToJavaName}List" resultType="com.sxmd.content.${folderName!''}.model.lm.${table.tableNameToJavaName}ListModel">
         select
         <include refid="base_column"></include> *
         from ${table.tableName}
