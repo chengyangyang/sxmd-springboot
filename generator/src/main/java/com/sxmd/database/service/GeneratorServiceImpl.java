@@ -33,6 +33,8 @@ public class GeneratorServiceImpl implements GeneratorService{
 
     @Value("${sxmd.basedate}")
     private String database;
+    @Value("${sxmd.zip-download-folder-name}")
+    private String folderName;
     @Resource
     private MysqlGeneratorDao mysqlDao;
     @Resource
@@ -124,7 +126,7 @@ public class GeneratorServiceImpl implements GeneratorService{
             }
         }
         // 如果输入的表名称不是空的，把表的字段进入
-        if(StringUtil.isNotBlank(tableName) && fileName.contains(FILE_SUFFIX)){
+        if(StringUtil.isNotBlank(tableName)){
             TableEntity table = this.getTableByTableNameAndInit(tableName);
             List<ColumnEntity> columns = this.getColumnsByTableInit(isFilterColumns,tableName);
             map.put("table",table);
@@ -133,6 +135,7 @@ public class GeneratorServiceImpl implements GeneratorService{
             fileName = MessageFormat.format(ftlEntity.getCreateFileName(), table.getTableNameToJavaName());
             map.put("fileName",fileName.substring(0,fileName.lastIndexOf('.')));
         }
+        map.put("folderName",folderName);
         FreemarkerConfig.generatorFile(templateName,filePath + File.separator + fileName,map);
     }
 

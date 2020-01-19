@@ -3,19 +3,23 @@ package com.sxmd.content.mytest.service;
 
 import com.github.pagehelper.PageHelper;
 import com.sxmd.base.BasePage;
+import com.sxmd.base.ResponseCodeEnum;
 import com.sxmd.content.mytest.dao.MyTestDao;
-import com.sxmd.content.mytest.entity.MyTest;
+import com.sxmd.content.mytest.entity.MyTestEntity;
 import com.sxmd.content.mytest.model.am.MyTestAddModel;
 import com.sxmd.content.mytest.model.dm.MyTestModel;
 import com.sxmd.content.mytest.model.em.MyTestEditModel;
 import com.sxmd.content.mytest.model.lm.MyTestListModel;
+import com.sxmd.exception.SxmdException;
 import com.sxmd.utils.IdWorkerUil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 
 /**
@@ -31,7 +35,6 @@ public class MyTestServiceImpl implements MyTestService {
     @Resource
     MyTestDao dao;
 
-
     /**
      * Description:   新增
      *
@@ -41,9 +44,10 @@ public class MyTestServiceImpl implements MyTestService {
      */
     @Override
     public boolean insertMyTest(MyTestAddModel model) {
-        MyTest entity = new MyTest();
+        MyTestEntity entity = new MyTestEntity();
         BeanUtils.copyProperties(model, entity);
         entity.setId(IdWorkerUil.generateId());
+        entity.setCreateDate(LocalDateTime.now());
         int result = dao.insert(entity);
         return result > 0 ? true : false;
     }
@@ -58,8 +62,12 @@ public class MyTestServiceImpl implements MyTestService {
      */
     @Override
     public boolean updateMyTest(MyTestEditModel model) {
-        MyTest entity = dao.selectById(model.getId());
+        MyTestEntity entity = dao.selectById(model.getId());
+        if(Objects.isNull(entity)){
+            throw new SxmdException(ResponseCodeEnum.CODE_9991);
+        }
         BeanUtils.copyProperties(model, entity);
+        entity.setUpdateDate(LocalDateTime.now());
         int result = dao.updateById(entity);
         return result > 0 ? true : false;
     }
@@ -74,6 +82,10 @@ public class MyTestServiceImpl implements MyTestService {
      */
     @Override
     public boolean deleteMyTest(Long id) {
+        MyTestEntity entity = dao.selectById(id);
+        if(Objects.isNull(entity)){
+            throw new SxmdException(ResponseCodeEnum.CODE_9991);
+        }
         int result = dao.deleteById(id);
         return result > 0 ? true : false;
     }
@@ -88,7 +100,10 @@ public class MyTestServiceImpl implements MyTestService {
      */
     @Override
     public MyTestModel getMyTestById(Long id) {
-        MyTest entity = dao.selectById(id);
+        MyTestEntity entity = dao.selectById(id);
+        if(Objects.isNull(entity)){
+            throw new SxmdException(ResponseCodeEnum.CODE_9991);
+        }
         MyTestModel model = new MyTestModel();
         BeanUtils.copyProperties(entity, model);
         return model;

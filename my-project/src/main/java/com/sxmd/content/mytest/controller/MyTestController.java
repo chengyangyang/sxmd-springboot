@@ -6,10 +6,10 @@ import com.sxmd.content.mytest.model.am.MyTestAddModel;
 import com.sxmd.content.mytest.model.em.MyTestEditModel;
 import com.sxmd.content.mytest.service.MyTestService;
 import io.swagger.annotations.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.Map;
 
@@ -27,7 +27,7 @@ import java.util.Map;
 @RequestMapping("MyTest")
 public class MyTestController extends BaseController {
 
-    @Resource
+    @Autowired
     MyTestService service;
 
     /**
@@ -39,7 +39,7 @@ public class MyTestController extends BaseController {
     @ApiOperation(value = "条件查询测试表", notes = "测试表")
     @RequestMapping(method = RequestMethod.GET)
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "page", value = "当前页", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = "pageNum", value = "当前页", paramType = "query", required = true, dataType = "int"),
             @ApiImplicitParam(name = "pageSize", value = "每页数量", paramType = "query", required = true, dataType = "int"),
     })
     public AjaxResult search(@ApiIgnore @RequestParam Map<String,Object> map) {
@@ -53,7 +53,7 @@ public class MyTestController extends BaseController {
      * @date
      */
     @ApiOperation(value = "获取测试表", notes = "根据测试表ID获取单条测试表")
-    @ApiImplicitParam(name = "id", value = "维保计划id", required = true, dataType = "Long", paramType = "path")
+    @ApiImplicitParam(name = "id", value = "测试表id", required = true, dataType = "Long", paramType = "path")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public AjaxResult get(@PathVariable("id") Long id) {
         return success(service.getMyTestById(id));
@@ -84,7 +84,7 @@ public class MyTestController extends BaseController {
      */
     @ApiOperation(value = "修改测试表", notes = "根据id更新测试表")
     @RequestMapping(method = RequestMethod.PUT)
-    public AjaxResult update(@ApiParam(name = "model", value = "测试表修改实体", required = true) @RequestBody @Valid MyTestEditModel model) {
+    public AjaxResult update(@RequestBody @Valid MyTestEditModel model) {
         boolean result = service.updateMyTest(model);
         if (result) {
             return success("修改成功");
@@ -100,7 +100,7 @@ public class MyTestController extends BaseController {
     * @date
     */
     @ApiOperation(value = "删除测试表", notes = "根据Id删除测试表")
-    @ApiImplicitParam(name = "id", value = "维保计划 id", required = true, dataType = "Long", paramType = "path")
+    @ApiImplicitParam(name = "id", value = "主键 id", required = true, dataType = "Long", paramType = "path")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public AjaxResult delete(@PathVariable("id") Long id) {
         boolean result = service.deleteMyTest(id);

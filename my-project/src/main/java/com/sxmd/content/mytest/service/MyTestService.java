@@ -18,12 +18,13 @@ import java.util.Map;
 public interface MyTestService {
 
     /**
-    * Description:  测试表-新增
-    * @author sxmd
-    * @param model:
-    * @return java.lang.String
-    * @date  2019/6/12 10:30
-    */
+     * Description:  测试表-新增
+     *
+     * @param model:
+     * @return java.lang.String
+     * @author sxmd
+     * @date 2019/6/12 10:30
+     */
     boolean insertMyTest(MyTestAddModel model);
 
     /**

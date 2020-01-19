@@ -1,5 +1,7 @@
 package com.sxmd.base;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -9,6 +11,7 @@ import java.io.Serializable;
  * @date 2019年08月06日 15:52
  * Version 1.0
  */
+@Data
 public class AjaxResult implements Serializable {
 
     private String message;

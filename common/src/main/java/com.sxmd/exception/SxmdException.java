@@ -1,5 +1,7 @@
 package com.sxmd.exception;
 
+import com.sxmd.base.ResponseCodeEnum;
+
 /**
  * Description: 自定义异常
  *
@@ -14,6 +16,10 @@ public class SxmdException extends RuntimeException {
 
     public SxmdException(String message) {
         super(message);
+    }
+
+    public SxmdException(ResponseCodeEnum responseCodeEnum) {
+        super(responseCodeEnum.getMessage());
     }
 
     public SxmdException(String message, Throwable cause) {

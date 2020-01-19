@@ -13,7 +13,7 @@ public class BaseController {
 
 
 	public AjaxResult success(Object data) {
-		if(null == data){
+		if(null != data){
 			return new AjaxResult().success(data);
 		}else {
 			return new AjaxResult().error(ResponseCodeEnum.CODE_9991);

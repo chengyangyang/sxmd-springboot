@@ -39,7 +39,7 @@ public class FtlConfig {
         String path = FtlConfig.class.getResource("/").getPath();
         path = path + File.separator + zipFolderName + File.separator;
         DOWNLOAD_ZIP_PATH = path;
-        map.put("sxmd/Entity.ftl",new FtlEntity("sxmd/Entity.ftl",path + "entity","{0}.java"));
+        map.put("sxmd/Entity.ftl",new FtlEntity("sxmd/Entity.ftl",path + "entity","{0}Entity.java"));
         map.put("sxmd/AddModel.ftl",new FtlEntity("sxmd/AddModel.ftl",path +"model" + File.separator + "am","{0}AddModel.java"));
         map.put("sxmd/EditModel.ftl",new FtlEntity("sxmd/EditModel.ftl",path +"model" + File.separator + "em","{0}EditModel.java"));
         map.put("sxmd/ListModel.ftl",new FtlEntity("sxmd/ListModel.ftl",path +"model" + File.separator + "lm","{0}ListModel.java"));
@@ -49,7 +49,7 @@ public class FtlConfig {
         map.put("sxmd/Controller.ftl",new FtlEntity("sxmd/Controller.ftl",path + "controller","{0}Controller.java"));
         map.put("sxmd/Service.ftl",new FtlEntity("sxmd/Service.ftl",path + "service","{0}Service.java"));
         map.put("sxmd/Serviceimpl.ftl",new FtlEntity("sxmd/Serviceimpl.ftl",path + "service","{0}ServiceImpl.java"));
-        map.put("sxmd/Xml.ftl",new FtlEntity("sxmd/Xml.ftl",path + "xml","{0}Mapper.java"));
+        map.put("sxmd/Xml.ftl",new FtlEntity("sxmd/Xml.ftl",path + "xml","{0}Mapper.xml"));
     }
 
     public static FtlEntity getFtlEntity(String templateName){

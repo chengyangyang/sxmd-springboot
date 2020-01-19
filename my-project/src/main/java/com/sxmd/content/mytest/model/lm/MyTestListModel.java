@@ -16,4 +16,5 @@ import lombok.Data;
 @ApiModel(value = "测试表列表", description = "接收参数body")
 public class MyTestListModel extends MyTestEditModel {
 
+
 }

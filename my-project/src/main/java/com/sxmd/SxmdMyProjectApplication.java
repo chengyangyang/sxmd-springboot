@@ -1,7 +1,10 @@
 package com.sxmd;
 
+import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.annotation.MapperScans;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Description: 启动类  @SpringBootApplication same as @Configuration @EnableAutoConfiguration @ComponentScan

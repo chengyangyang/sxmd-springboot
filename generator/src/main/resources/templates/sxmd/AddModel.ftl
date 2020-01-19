@@ -1,4 +1,4 @@
-package com.hollysys.smartfactory.account.system.model.vr;
+package com.sxmd.content.${folderName!''}.model.am;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
@@ -8,14 +8,14 @@ import lombok.Data;
 import java.util.Date;
 
 /**
-* Description: 添加${table.tableComment!''}实体
-*
-* @author sxmd
-* @date
-* Version 1.0
-*/
+ * Description: 添加${table.tableComment!''}实体
+ *
+ * @author sxmd
+ * @date
+ * Version 1.0
+ */
 @Data
-@ApiModel(value = "添加${table.tableComment!''}实体", description = "接收参数body")
+@ApiModel(value = "新增${table.tableComment!''}实体", description = "接收参数body")
 public class ${fileName} {
 
     <#list columns as li>
