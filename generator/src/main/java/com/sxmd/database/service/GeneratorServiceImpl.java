@@ -42,7 +42,6 @@ public class GeneratorServiceImpl implements GeneratorService{
 
     private static final String DATABASE_POSTGRESQL = "postgresql";
     private static final String DATABASE_MYSQL = "mysql";
-    private static final String FILE_SUFFIX = ".java";
 
     /**
      * Description:   查询列表
